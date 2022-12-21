@@ -1,0 +1,10 @@
+name: TownyMissionsV2
+version: ${project.version}
+main: me.deltaorion.townymissionsv2.TownyMissionsV2
+api-version: 1.19
+softdepend: ['Towny']
+commands:
+  testmissions:
+  missions:
+    description: Grand Command for Accessing Towny Missions!
+

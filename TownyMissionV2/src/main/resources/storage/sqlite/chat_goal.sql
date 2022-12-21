@@ -1,0 +1,8 @@
+CREATE TABLE ChatGoal (
+	Stage			INTEGER		NOT NULL,
+	Mission			VARCHAR(36) NOT NULL,
+	Word			VARCHAR(50)	NOT NULL,
+
+	PRIMARY KEY(Stage,Mission),
+	CONSTRAINT chtglfk1 FOREIGN KEY(Stage,Mission)	REFERENCES MissionGoal(Stage,Mission) ON UPDATE CASCADE ON DELETE CASCADE
+);
