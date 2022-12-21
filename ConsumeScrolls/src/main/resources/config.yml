@@ -1,0 +1,21 @@
+percentages:
+  common: 57
+  rare: 30
+  epic: 10
+  legendary: 3
+
+tool-tip:
+  - '&fRight click the mission to complete it'
+  - '&cWarning - this will delete the specified item'
+  - '&cfrom your inventory'
+show-title: true
+chat-reward-message: '&6You have completed the mission'
+
+scrolls:
+  item: CARROT
+  max-goal: 300
+  min-goal: 300
+  difficulty: MEDIUM
+  rewards:
+    - 'eco give #player# 500'
+    - 'give #player# carrot 64'

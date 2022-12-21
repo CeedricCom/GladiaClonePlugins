@@ -1,0 +1,5 @@
+name: ConsumeScrolls
+version: '${project.version}'
+main: me.deltaorion.consumescrolls.ConsumeScrollPlugin
+api-version: 1.19
+softdepend: [ NBTAPI ]
