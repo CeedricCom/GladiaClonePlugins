@@ -2,12 +2,16 @@ package me.deltaorion.consumescrolls;
 
 import org.bukkit.ChatColor;
 
+import java.util.Random;
+
 public enum Rarity {
 
     COMMON(ChatColor.GRAY, "Common"),
     RARE(ChatColor.GREEN, "Rare"),
     EPIC(ChatColor.DARK_PURPLE, "Epic"),
     LEGENDARY(ChatColor.GOLD, "Legendary");
+
+    private final static Random r = new Random();
 
     private final ChatColor color;
     private final String displayName;
@@ -23,7 +27,11 @@ public enum Rarity {
     }
 
     public String getDisplayName() {
-        return ChatColor.BOLD + "" + color + "" + displayName;
+        return color + "" + ChatColor.BOLD + "" + displayName;
+    }
+
+    public String getPlainDisplayName() {
+        return displayName;
     }
 
     public int getPercentage() {
@@ -32,5 +40,18 @@ public enum Rarity {
 
     public void setPercentage(int percentage) {
         this.percentage = percentage;
+    }
+
+    public static Rarity getRandom() {
+        Rarity[] rarities = Rarity.values();
+        int random = r.nextInt(100) + 1;
+        int sum = 0;
+        for(Rarity rarity : rarities) {
+            sum += rarity.percentage;
+            if(random <= sum)
+                return rarity;
+        }
+
+        throw new IllegalStateException();
     }
 }

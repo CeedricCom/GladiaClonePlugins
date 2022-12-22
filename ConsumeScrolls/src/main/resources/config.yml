@@ -12,10 +12,19 @@ show-title: true
 chat-reward-message: '&6You have completed the mission'
 
 scrolls:
-  item: CARROT
-  max-goal: 300
-  min-goal: 300
-  difficulty: MEDIUM
-  rewards:
-    - 'eco give #player# 500'
-    - 'give #player# carrot 64'
+  carrot-med:
+    item: carrot
+    rarity: rare
+    max-goal: 300
+    min-goal: 300
+    rewards:
+      1:
+        type: command
+        command: 'experience add {0} 100 levels'
+      2:
+        type: item
+        amount: 32
+        itemstack:
+          ==: org.bukkit.inventory.ItemStack
+          v: 19
+          type: golden_carrot

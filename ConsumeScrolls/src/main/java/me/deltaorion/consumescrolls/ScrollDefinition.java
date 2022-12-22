@@ -2,6 +2,7 @@ package me.deltaorion.consumescrolls;
 
 import me.deltaorion.bukkit.item.EMaterial;
 import me.deltaorion.consumescrolls.reward.ScrollReward;
+import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.*;
@@ -9,14 +10,14 @@ import java.util.*;
 public class ScrollDefinition {
 
     private final String name;
-    private final EMaterial material;
+    private final Material material;
     private final Rarity rarity;
     private final int minGoal;
     private final int maxGoal;
     private List<ScrollReward> rewards;
     private final Random random;
 
-    public ScrollDefinition(String name, EMaterial material, Rarity rarity, int minGoal, int maxGoal) {
+    public ScrollDefinition(String name, Material material, Rarity rarity, int minGoal, int maxGoal) {
         this.name = name;
         this.material = material;
         this.rarity = rarity;
@@ -30,7 +31,7 @@ public class ScrollDefinition {
         this.rewards.add(reward);
     }
 
-    public EMaterial getMaterial() {
+    public Material getMaterial() {
         return material;
     }
 

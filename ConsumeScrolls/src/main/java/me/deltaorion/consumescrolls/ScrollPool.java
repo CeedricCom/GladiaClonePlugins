@@ -7,6 +7,7 @@ public class ScrollPool {
     private final Map<String, ScrollDefinition> scrolls;
     private final Map<Rarity, List<ScrollDefinition>> byRarity;
     private final ConsumeScrollPlugin plugin;
+    private final Random random;
 
     public ScrollPool(ConsumeScrollPlugin plugin) {
         this.plugin = plugin;
@@ -15,6 +16,7 @@ public class ScrollPool {
         for(Rarity r : Rarity.values()) {
             byRarity.put(r,new ArrayList<>());
         }
+        this.random = new Random();
     }
 
     public void addScroll(ScrollDefinition definition) {
@@ -32,5 +34,13 @@ public class ScrollPool {
 
     public List<ScrollDefinition> getScrollByRarity(Rarity rarity) {
         return byRarity.get(rarity);
+    }
+
+    public ScrollDefinition getRandomScrollByRarity(Rarity rarity) {
+        List<ScrollDefinition> scrolls = getScrollByRarity(rarity);
+        if(scrolls.size()==0)
+            return null;
+
+        return scrolls.get(random.nextInt(scrolls.size()));
     }
 }

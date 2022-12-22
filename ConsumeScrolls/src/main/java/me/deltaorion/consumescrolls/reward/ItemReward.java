@@ -6,18 +6,21 @@ import org.bukkit.inventory.ItemStack;
 public class ItemReward implements ScrollReward {
 
     private final ItemStack itemStack;
+    private final int amount;
 
-    public ItemReward(ItemStack itemStack) {
+    public ItemReward(ItemStack itemStack, int amount) {
         this.itemStack = itemStack;
+        this.amount = amount;
     }
 
     @Override
     public void giveReward(Player player) {
-        if (player.getInventory().firstEmpty() == -1) {
-            player.getWorld().dropItemNaturally(player.getLocation(), itemStack);
-        }
-        else {
-            player.getInventory().addItem(itemStack);
+        for(int i=0;i<amount;i++) {
+            if (player.getInventory().firstEmpty() == -1) {
+                player.getWorld().dropItemNaturally(player.getLocation(), itemStack);
+            } else {
+                player.getInventory().addItem(itemStack);
+            }
         }
     }
 }

@@ -14,6 +14,7 @@ public class CommandReward implements ScrollReward {
 
     @Override
     public void giveReward(Player player) {
-        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), Message.valueOf(command).toString(player.getName()));
+        String cmd = Message.valueOf(command).toString(player.getName());
+        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), cmd);
     }
 }

@@ -4,6 +4,7 @@ import me.deltaorion.bukkit.item.EMaterial;
 import me.deltaorion.bukkit.item.ItemBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 
@@ -16,7 +17,7 @@ public class ConsumeScroll {
     private ItemBuilder item;
     private int progress;
     private int goal;
-    private EMaterial material;
+    private Material material;
     private Rarity rarity;
     private ScrollDefinition definition;
 
@@ -43,7 +44,7 @@ public class ConsumeScroll {
                 .addFlags(ItemFlag.HIDE_PLACED_ON);
 
         for(String line : toolTip) {
-            itemBuilder.addLoreLine(line);
+            itemBuilder.addLoreLine(ChatColor.translateAlternateColorCodes('&',line));
         }
 
         itemBuilder.addLoreLine(ChatColor.GOLD + "" + ChatColor.BOLD + "Objective:");
@@ -61,7 +62,7 @@ public class ConsumeScroll {
         ItemBuilder item = new ItemBuilder(stack);
         progress = Integer.parseInt(item.getTagValue(PROGRESS_KEY));
         goal = Integer.parseInt(item.getTagValue(GOAL_KEY));
-        material = EMaterial.matchMaterial(item.getTagValue(MATERIAL_KEY));
+        material = Material.matchMaterial(item.getTagValue(MATERIAL_KEY));
         definition = pool.getScroll(item.getTagValue(DEFINITION_KEY));
         this.item = item;
     }
@@ -109,7 +110,7 @@ public class ConsumeScroll {
         return goal;
     }
 
-    public EMaterial getMaterial() {
+    public Material getMaterial() {
         return material;
     }
 

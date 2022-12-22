@@ -1,0 +1,8 @@
+package me.deltaorion.consumescrolls.config;
+
+public class ConfigurationException extends Exception {
+
+    public ConfigurationException(String message) {
+        super(message);
+    }
+}

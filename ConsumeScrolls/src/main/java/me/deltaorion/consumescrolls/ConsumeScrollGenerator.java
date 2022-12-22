@@ -58,7 +58,7 @@ public class ConsumeScrollGenerator extends CustomItem {
             return;
 
 
-        Material material = scroll.getMaterial().getBukkitMaterial();
+        Material material = scroll.getMaterial();
         int diff = scroll.getGoal() - scroll.getProgress();
 
         for(int i=0;diff > 0 && i<player.getInventory().getSize();i++) {
@@ -102,6 +102,6 @@ public class ConsumeScrollGenerator extends CustomItem {
     }
 
     private void displayChatReward(Player player) {
-        player.sendMessage(config.getChatRewardMessage());
+        player.sendMessage(ChatColor.translateAlternateColorCodes('&',config.getChatRewardMessage()));
     }
 }
