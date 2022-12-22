@@ -20,10 +20,12 @@ scrolls:
     rewards:
       1:
         type: command
+        name: '100 Levels'
         command: 'experience add {0} 100 levels'
       2:
         type: item
         amount: 32
+        name: 'Golden Carrot'
         itemstack:
           ==: org.bukkit.inventory.ItemStack
           v: 19

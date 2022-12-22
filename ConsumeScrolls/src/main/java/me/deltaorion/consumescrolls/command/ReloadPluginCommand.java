@@ -19,7 +19,7 @@ public class ReloadPluginCommand extends FunctionalCommand {
     @Override
     public void commandLogic(SentCommand sentCommand) throws CommandException {
         try {
-            plugin.getConfiguration().reload();
+            plugin.reloadConfiguration();
             sentCommand.getSender().sendMessage("Successfully reloaded config");
         } catch (ConfigurationException e) {
             sentCommand.getSender().sendMessage("Unable to reload config: "+e.getMessage());

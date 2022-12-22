@@ -14,7 +14,6 @@ import org.bukkit.plugin.Plugin;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.CopyOption;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.*;
@@ -116,13 +115,15 @@ public class YamlScrollConfig implements ScrollConfig {
 
     private void loadCommand(ScrollDefinition definition, ConfigurationSection reward) {
         String command = reward.getString("command");
-        definition.addReward(new CommandReward(command));
+        String name = reward.getString("name");
+        definition.addReward(new CommandReward(command, name));
     }
 
     private void loadItem(ScrollDefinition definition, ConfigurationSection reward) {
         ItemStack itemStack = reward.getItemStack("itemstack");
         int amount = reward.getInt("amount");
-        definition.addReward(new ItemReward(itemStack,amount));
+        String name = reward.getString("name");
+        definition.addReward(new ItemReward(name, itemStack,amount));
     }
 
     private void loadPercentages(Configuration config) throws ConfigurationException {

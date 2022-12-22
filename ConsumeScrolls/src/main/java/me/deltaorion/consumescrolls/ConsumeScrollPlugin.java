@@ -39,13 +39,11 @@ public final class ConsumeScrollPlugin extends BukkitPlugin {
 
         try {
             createConfig();
+            reloadConfiguration();
         } catch (ConfigurationException e) {
             Bukkit.getLogger().warning("Invalid Config: "+e.getMessage());
             disablePlugin();
             return;
-        }
-        for(ScrollDefinition definition : config.getScrolls()) {
-            pool.addScroll(definition);
         }
 
         generator = new ConsumeScrollGenerator(config,pool);
@@ -82,8 +80,8 @@ public final class ConsumeScrollPlugin extends BukkitPlugin {
 
         List<ScrollDefinition> scrolls = new ArrayList<>();
         ScrollDefinition scr = new ScrollDefinition("gaming",Material.PUMPKIN,Rarity.COMMON,5,64);
-        scr.addReward(new CommandReward("experience add {0} 500 levels"));
-        scr.addReward(new ItemReward(new ItemStack(Material.NAME_TAG),64));
+        scr.addReward(new CommandReward("experience add {0} 500 levels", "exp"));
+        scr.addReward(new ItemReward("Item", new ItemStack(Material.NAME_TAG),64));
 
         Map<Rarity,Integer> percentages = new HashMap<>();
 
@@ -94,4 +92,12 @@ public final class ConsumeScrollPlugin extends BukkitPlugin {
         return config;
     }
 
+    public void reloadConfiguration() throws ConfigurationException {
+        config.reload();
+
+        pool.clearScrolls();
+        for(ScrollDefinition definition : config.getScrolls()) {
+            pool.addScroll(definition);
+        }
+    }
 }

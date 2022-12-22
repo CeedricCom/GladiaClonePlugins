@@ -2,6 +2,7 @@ package me.deltaorion.consumescrolls;
 
 import me.deltaorion.bukkit.item.EMaterial;
 import me.deltaorion.bukkit.item.ItemBuilder;
+import me.deltaorion.consumescrolls.reward.ScrollReward;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -41,7 +42,8 @@ public class ConsumeScroll {
                 .addFlags(ItemFlag.HIDE_ATTRIBUTES)
                 .addFlags(ItemFlag.HIDE_UNBREAKABLE)
                 .addFlags(ItemFlag.HIDE_POTION_EFFECTS)
-                .addFlags(ItemFlag.HIDE_PLACED_ON);
+                .addFlags(ItemFlag.HIDE_PLACED_ON)
+                .addFlags(ItemFlag.HIDE_ENCHANTS);
 
         for(String line : toolTip) {
             itemBuilder.addLoreLine(ChatColor.translateAlternateColorCodes('&',line));
@@ -49,6 +51,13 @@ public class ConsumeScroll {
 
         itemBuilder.addLoreLine(ChatColor.GOLD + "" + ChatColor.BOLD + "Objective:");
         itemBuilder.addLoreLine(ChatColor.WHITE + "- Gather " + goal + " " + getFriendlyName() + ": 0");
+
+        itemBuilder.addLoreLine("");
+        itemBuilder.addLoreLine(ChatColor.GOLD + "" + ChatColor.BOLD + "Rewards:");
+        System.out.println("This has compiled");
+        for(ScrollReward reward : definition.getRewards()) {
+            itemBuilder.addLoreLine(ChatColor.WHITE+"- "+reward.getName());
+        }
 
         itemBuilder.addTag(MATERIAL_KEY,material.toString());
         itemBuilder.addTag(GOAL_KEY, String.valueOf(goal));

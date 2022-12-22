@@ -43,4 +43,8 @@ public class ScrollPool {
 
         return scrolls.get(random.nextInt(scrolls.size()));
     }
+
+    public void clearScrolls() {
+        scrolls.clear();
+    }
 }

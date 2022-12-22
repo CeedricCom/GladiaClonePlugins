@@ -5,10 +5,12 @@ import org.bukkit.inventory.ItemStack;
 
 public class ItemReward implements ScrollReward {
 
+    private final String name;
     private final ItemStack itemStack;
     private final int amount;
 
-    public ItemReward(ItemStack itemStack, int amount) {
+    public ItemReward(String name, ItemStack itemStack, int amount) {
+        this.name = name;
         this.itemStack = itemStack;
         this.amount = amount;
     }
@@ -22,5 +24,10 @@ public class ItemReward implements ScrollReward {
                 player.getInventory().addItem(itemStack);
             }
         }
+    }
+
+    @Override
+    public String getName() {
+        return name;
     }
 }
