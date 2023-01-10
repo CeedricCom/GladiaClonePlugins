@@ -138,6 +138,7 @@ public final class CombatPlus extends JavaPlugin {
         Bukkit.getPluginManager().callEvent(new CombatPlusLoadEvent());
     }
 
+    //fucking terrible
     public Module getModule(Class<? extends Module> clazz) {
         return this.modules.stream().filter(module -> module.getClass().equals(clazz)).findFirst().orElse(null);
     }

@@ -16,6 +16,7 @@ import org.bukkit.event.entity.ProjectileLaunchEvent;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.BiFunction;
 
 public class EnderpearlCooldown extends Module {
 
@@ -58,6 +59,10 @@ public class EnderpearlCooldown extends Module {
         }
 
         return secondsLeft;
+    }
+
+    public void setCooldown(UUID player, long cooldown) {
+        cooldowns.put(player,cooldown);
     }
 
     public String getCooldown(UUID uuid) {
