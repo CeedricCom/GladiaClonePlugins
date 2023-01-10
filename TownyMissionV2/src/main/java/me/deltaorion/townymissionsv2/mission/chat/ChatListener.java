@@ -26,7 +26,6 @@ public class ChatListener implements Listener {
 
     @EventHandler (priority = EventPriority.MONITOR,ignoreCancelled = false)
     public void onChat(AsyncPlayerChatEvent event) {
-        System.out.println(event.getMessage());
         MissionPlayer player = plugin.getPlayerManager().getPlayer(event.getPlayer());
 
         Mission primary = plugin.getMissionManager().getPrimaryMission(player,player.getContributePriority());

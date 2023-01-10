@@ -58,7 +58,7 @@ public class GiveConsumeScrollCommand extends FunctionalCommand {
                 throw new CommandException("No scroll can be found of rarity'"+rarity+"'");
 
             generator.give(receiver, definition);
-            receiver.sendMessage("Gave '" + definition.getName() + "' to " + receiver.getName());
+            command.getSender().sendMessage("Gave '" + definition.getName() + "' to " + receiver.getName());
         }
     }
 
@@ -81,7 +81,7 @@ public class GiveConsumeScrollCommand extends FunctionalCommand {
                 throw new CommandException("No scroll can be found of rarity'"+rarity+"'");
 
             generator.give(receiver, definition);
-            receiver.sendMessage("Gave '" + definition.getName() + "' to " + receiver.getName());
+            command.getSender().sendMessage("Gave '" + definition.getName() + "' to " + receiver.getName());
         }
     }
 
@@ -103,7 +103,7 @@ public class GiveConsumeScrollCommand extends FunctionalCommand {
                 throw new CommandException("Could not find scroll '"+scrollName+"'");
 
             generator.give(receiver, definition);
-            receiver.sendMessage("Gave '" + definition.getName() + "' to " + receiver.getName());
+            command.getSender().sendMessage("Gave '" + definition.getName() + "' to " + receiver.getName());
         }
     }
 }

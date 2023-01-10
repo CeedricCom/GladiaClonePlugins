@@ -77,8 +77,6 @@ public class MissionTest implements CommandExecutor {
         missionGoal.contribute(player.getUniqueId(),5);
         missionGoal.contribute(player.getUniqueId(),5);
         int leftOver = missionGoal.contribute(player.getUniqueId(),50);
-
-        System.out.println(leftOver);
     }
 
     public void testReward(CommandSender sender, Town town) {
@@ -98,14 +96,6 @@ public class MissionTest implements CommandExecutor {
                 .appendGoal(chatDefinition.generateGoal(bearer,"help",3))
                 .appendGoal(chatDefinition.generateGoal(bearer,"world",2, new GoalReward(5000, new ExperienceReward())))
                 .build();
-
-        System.out.println("UUID: "+mission.getUniqueID());
-        System.out.println("Mission Over: "+mission.missionOver());
-        System.out.println("Expired: "+mission.missionExpired());
-        System.out.println("Goal: "+mission.getCurrentGoal());
-        System.out.println("Duration: "+mission.getDuration());
-        System.out.println("Stage: "+mission.getStage());
-
 
         plugin.getMissionManager().registerMission(mission);
         sender.sendMessage("Registered Mission");

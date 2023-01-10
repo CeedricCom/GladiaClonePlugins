@@ -1,0 +1,8 @@
+name: SiegeCommandBlacklist
+version: '${project.version}'
+main: me.deltaorion.siegecommandblacklist.SiegeCommandBlacklist
+api-version: 1.19
+depend:
+  - SiegeWar
+commands:
+  siegeblacklist:

@@ -37,14 +37,18 @@ public class ScrollPool {
     }
 
     public ScrollDefinition getRandomScrollByRarity(Rarity rarity) {
-        List<ScrollDefinition> scrolls = getScrollByRarity(rarity);
-        if(scrolls.size()==0)
+        List<ScrollDefinition> scrollByRarity = getScrollByRarity(rarity);
+        if(scrollByRarity.size()==0)
             return null;
 
-        return scrolls.get(random.nextInt(scrolls.size()));
+        return scrollByRarity.get(random.nextInt(scrollByRarity.size()));
     }
 
     public void clearScrolls() {
         scrolls.clear();
+        byRarity.clear();
+        for(Rarity r : Rarity.values()) {
+            byRarity.put(r,new ArrayList<>());
+        }
     }
 }

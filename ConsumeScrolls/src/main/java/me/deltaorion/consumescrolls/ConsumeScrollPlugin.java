@@ -46,7 +46,7 @@ public final class ConsumeScrollPlugin extends BukkitPlugin {
             return;
         }
 
-        generator = new ConsumeScrollGenerator(config,pool);
+        generator = new ConsumeScrollGenerator(this, config,pool);
         getCustomItemManager().registerItem(generator);
 
         registerCommand(new ConsumeScrollCommand(this),"scrolladmin");

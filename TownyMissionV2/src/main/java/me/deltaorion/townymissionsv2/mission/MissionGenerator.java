@@ -142,7 +142,7 @@ public class MissionGenerator implements ConfigurationSerializable {
     }
 
     public boolean isOfType(ContributeType type) {
-        return Objects.equals(type,this.type) || this.type==null;
+        return Objects.equals(this.type,type);
     }
 
     public String toString() {
