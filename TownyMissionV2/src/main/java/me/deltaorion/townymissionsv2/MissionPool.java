@@ -122,7 +122,7 @@ public class MissionPool implements ConfigurationSerializable {
         bearer.addMission(mission);
     }
 
-    private List<MissionGenerator> getGeneratorsOfType(ContributeType type) {
+    public List<MissionGenerator> getGeneratorsOfType(ContributeType type) {
         List<MissionGenerator> generators = new ArrayList<>();
         for (MissionGenerator generator : getPool()) {
             if (generator.isOfType(type)) {

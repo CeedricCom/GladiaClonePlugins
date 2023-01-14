@@ -148,4 +148,12 @@ public class MissionGenerator implements ConfigurationSerializable {
     public String toString() {
         return "Name: "+name + " Duration: "+DurationParser.print(duration) + " Type: "+type+" Rewards: "+rewards + " Goals: "+goals;
     }
+
+    public List<GoalGenerator> getGoals() {
+        return goals;
+    }
+
+    public List<MissionReward> getRewards() {
+        return rewards;
+    }
 }

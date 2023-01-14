@@ -40,6 +40,7 @@ public class MissionAdminCommand implements SubCommand {
         commandArgs.put("remove-cooldown",new MissionAdminCooldownRemove());
         commandArgs.put("tick",new MissionsTickCommand());
         commandArgs.put("save-database",new MissionAdminSaveDatabase());
+        commandArgs.put("docs",new DocumentationCommand());
     }
 
     private final HashMap<String,SubCommand> commandArgs;

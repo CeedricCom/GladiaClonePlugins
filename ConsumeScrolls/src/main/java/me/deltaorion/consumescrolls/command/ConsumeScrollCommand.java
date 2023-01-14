@@ -18,6 +18,7 @@ public class ConsumeScrollCommand extends FunctionalCommand {
         super(Permissions.ADMIN);
         registerArgument("give",new GiveConsumeScrollCommand(plugin.getPool(),plugin.getGenerator()));
         registerArgument("reload", new ReloadPluginCommand(plugin));
+        registerArgument("docs",new DocumentationCommand(plugin));
     }
 
     @Override

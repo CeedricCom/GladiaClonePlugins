@@ -15,7 +15,6 @@ public class Main {
     }
 
     public void run() {
-        RandomHelper helper = new RandomHelper();
     }
 
 }

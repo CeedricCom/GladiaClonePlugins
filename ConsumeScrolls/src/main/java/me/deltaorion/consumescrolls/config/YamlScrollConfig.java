@@ -5,6 +5,7 @@ import me.deltaorion.consumescrolls.ScrollDefinition;
 import me.deltaorion.consumescrolls.reward.CommandReward;
 import me.deltaorion.consumescrolls.reward.ItemReward;
 import me.deltaorion.consumescrolls.reward.RewardType;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.ConfigurationSection;
@@ -123,7 +124,9 @@ public class YamlScrollConfig implements ScrollConfig {
         ItemStack itemStack = reward.getItemStack("itemstack");
         int amount = reward.getInt("amount");
         String name = reward.getString("name");
-        definition.addReward(new ItemReward(name, itemStack,amount));
+        if(name==null)
+            name = "";
+        definition.addReward(new ItemReward(ChatColor.translateAlternateColorCodes('&',name), itemStack,amount));
     }
 
     private void loadPercentages(Configuration config) throws ConfigurationException {

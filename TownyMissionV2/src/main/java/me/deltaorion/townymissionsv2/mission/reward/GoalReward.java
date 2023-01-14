@@ -74,6 +74,8 @@ public class GoalReward extends AbstractReward {
         statement.addBatch();
     }
 
+
+
     public String toString() {
         return "Reward: "+RewardEnum.fromClass(getRewardType()) + " Total: "+getTotal();
     }

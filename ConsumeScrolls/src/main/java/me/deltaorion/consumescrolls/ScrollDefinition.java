@@ -21,6 +21,11 @@ public class ScrollDefinition {
         this.name = name;
         this.material = material;
         this.rarity = rarity;
+        if(minGoal > maxGoal) {
+            int temp = minGoal;
+            minGoal = maxGoal;
+            maxGoal = temp;
+        }
         this.minGoal = minGoal;
         this.maxGoal = maxGoal;
         this.random = new Random();

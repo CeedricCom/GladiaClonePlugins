@@ -64,12 +64,10 @@ public class ConsumeScrollGenerator extends CustomItem {
 
         if(event.getAction().equals(InventoryAction.MOVE_TO_OTHER_INVENTORY)
         && event.getClick().isShiftClick()) {
-            System.out.println("Handling Shift Click");
             handleShiftClick(event);
             return;
         }
 
-        System.out.println("Handling Place Click");
         handlePlaceClick(event);
     }
 
@@ -77,6 +75,7 @@ public class ConsumeScrollGenerator extends CustomItem {
         Inventory inventory = event.getClickedInventory();
         if(inventory==null)
             return;
+
 
         if(!inventory.getType().equals(InventoryType.SHULKER_BOX))
             return;

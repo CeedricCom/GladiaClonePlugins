@@ -1,0 +1,7 @@
+name: SiegewarSchedule
+version: '${project.version}'
+main: me.deltaorion.siegewarschedule.SiegewarSchedule
+api-version: 1.19
+commands:
+  warschedule:
+    aliases: ['sessions','siegeschedule']

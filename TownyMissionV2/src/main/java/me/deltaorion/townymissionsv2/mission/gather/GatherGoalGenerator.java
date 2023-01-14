@@ -64,4 +64,8 @@ public class GatherGoalGenerator extends CompletableGoalGenerator {
     public String toString() {
         return super.toString() + " material: "+material;
     }
+
+    public Material getMaterial() {
+        return material;
+    }
 }

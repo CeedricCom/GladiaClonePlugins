@@ -74,11 +74,11 @@ public abstract class CompletableGoalGenerator implements GoalGenerator {
         return definition;
     }
 
-    protected int getGoal() {
+    public int getGoal() {
         return goal;
     }
 
-    protected List<GoalReward> getRewards() {
+    public List<GoalReward> getRewards() {
         List<GoalReward> generated = new ArrayList<>();
         for(GoalReward reward : rewards) {
             generated.add(reward.clone());
@@ -89,4 +89,6 @@ public abstract class CompletableGoalGenerator implements GoalGenerator {
     public String toString() {
         return "Definition: "+Definition.fromClass(definition) + " Goal: "+goal + " Rewards: "+rewards;
     }
+
+
 }

@@ -1,0 +1,5 @@
+name: Documenter
+version: '${project.version}'
+main: me.deltaorion.documenter.Documenter
+api-version: 1.19
+depends: [CrateReloaded]
