@@ -6,6 +6,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.server.ServerLoadEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.BufferedReader;
@@ -62,5 +63,13 @@ public class UpdateChecker extends BukkitRunnable implements Listener {
         e.getPlayer().sendMessage(MsgType.UPDATE_REMINDER.getMessage()
                 .replace("%current%", plugin.getDescription().getVersion())
                 .replace("%new%", newVersion));
+    }
+
+    @EventHandler
+    public void onLoad(ServerLoadEvent event) {
+        plugin.onDisable();
+        plugin.onEnable();
+        Bukkit.getLogger().info(MsgType.RELOADED.getMessage());
+        Bukkit.getLogger().info("Weird Fix");
     }
 }

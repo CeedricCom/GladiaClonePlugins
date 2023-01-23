@@ -1,0 +1,7 @@
+name: TownyCampsIntegration
+version: '${project.version}'
+main: com.ceedric.townycampsintegration.TownyCampsIntegration
+api-version: 1.19
+depend:
+  - SiegeWar
+  - TownyCamps

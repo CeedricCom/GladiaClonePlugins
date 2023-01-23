@@ -16,10 +16,6 @@ public class BlacklistCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        if (!sender.hasPermission(Permissions.COMMAND)) {
-            sender.sendMessage(ChatColor.RED + "Hey! You do not have permission to use this command");
-            return true;
-        }
 
         if (args.length == 0) {
             sender.sendMessage("/siegecommandblacklist [info,reload]");
@@ -27,6 +23,10 @@ public class BlacklistCommand implements CommandExecutor {
         }
 
         if (args[0].equalsIgnoreCase("info")) {
+            if(!sender.hasPermission(Permissions.INFO_COMMAND)) {
+                sender.sendMessage(ChatColor.RED + "Hey! You do not have permission to use this command");
+                return true;
+            }
             sender.sendMessage("Blacklisted command");
             for (String cmd : plugin.getBlackListConfig().getBlackList()) {
                 sender.sendMessage("- " + cmd);
@@ -35,6 +35,10 @@ public class BlacklistCommand implements CommandExecutor {
         }
 
         if(args[0].equalsIgnoreCase("reload")) {
+            if(!sender.hasPermission(Permissions.RELOAD_COMMAND)) {
+                sender.sendMessage(ChatColor.RED + "Hey! You do not have permission to use this command");
+                return true;
+            }
             sender.sendMessage("Reloading Configuration");
             plugin.getBlackListConfig().reload();
             return true;

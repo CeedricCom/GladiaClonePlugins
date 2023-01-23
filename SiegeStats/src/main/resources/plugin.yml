@@ -1,0 +1,5 @@
+name: SiegeStats
+version: '${project.version}'
+main: me.deltaorion.siegestats.SiegeStatsPlugin
+api-version: 1.19
+depend: ['Towny', 'SiegeWar']

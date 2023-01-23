@@ -22,6 +22,9 @@ public final class SiegeCommandBlacklist extends JavaPlugin {
     }
 
     public Configuration reload() {
+        if(!getDataFolder().toPath().resolve("config.yml").toFile().exists())
+            saveDefaultConfig();
+
         reloadConfig();
         return getConfig();
     }

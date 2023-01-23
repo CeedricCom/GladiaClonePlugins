@@ -57,6 +57,8 @@ public final class CombatPlus extends JavaPlugin {
             " "
     };
 
+    private boolean weirdFix = false;
+
     @Override
     public void onDisable() {
 

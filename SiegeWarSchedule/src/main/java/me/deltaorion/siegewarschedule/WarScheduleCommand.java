@@ -7,9 +7,10 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.time.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +25,7 @@ public class WarScheduleCommand implements CommandExecutor {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         sender.sendMessage(ChatColor.GREEN +"---oO SiegeWar Schedule Oo---");
         sender.sendMessage(ChatColor.GOLD + "Battle Session Duration: " + ChatColor.WHITE +SiegeWarSettings.getWarSiegeBattleSessionsDurationMinutes() +"m");
-        sender.sendMessage(ChatColor.GOLD + "Timezone: "+ChatColor.WHITE + ZoneId.systemDefault().getId());
+        sender.sendMessage(ChatColor.GOLD + "Timezone: "+ChatColor.WHITE + "UTC");
         String weekDaySessions = SiegeWarSettings.getWarSiegeBattleSessionWeekdayStartTimes();
         String weekEndSessions = SiegeWarSettings.getWarSiegeBattleSessionWeekendStartTimes();
         if (weekEndSessions.equals(weekDaySessions)) {
@@ -39,11 +40,11 @@ public class WarScheduleCommand implements CommandExecutor {
         return true;
     }
 
-    private String getFormattedTimes(List<LocalTime> times) {
+    private String getFormattedTimes(List<LocalDateTime> times) {
         StringBuilder builder = new StringBuilder(ChatColor.GOLD.toString()).append('[').append(ChatColor.YELLOW);
         int count = 0;
-        for(LocalTime time : times) {
-            builder.append(ChatColor.YELLOW).append(time.format(dateFormat));
+        for(LocalDateTime time : times) {
+            builder.append(ChatColor.YELLOW).append(time.atOffset(ZoneOffset.UTC).format(dateFormat));
             if(count<times.size()-1) {
                 builder.append(ChatColor.WHITE).append(',').append(' ');
             }
@@ -54,15 +55,16 @@ public class WarScheduleCommand implements CommandExecutor {
         return builder.toString();
     }
 
-    private List<LocalTime> getTimes(String timeString) {
-        List<LocalTime> times = new ArrayList<>();
+    private List<LocalDateTime> getTimes(String timeString) {
+        List<LocalDateTime> times = new ArrayList<>();
 
+        LocalDate now = LocalDate.now();
         for(String time : COMMA.split(timeString)) {
             if (time.contains(":")) {
                 String[] hourMinPair = time.split(":");
-                times.add(LocalTime.of(Integer.parseInt(hourMinPair[0]), Integer.parseInt(hourMinPair[1])));
+                times.add(LocalDateTime.of(now,LocalTime.of(Integer.parseInt(hourMinPair[0]), Integer.parseInt(hourMinPair[1]))));
             } else {
-                times.add(LocalTime.of(Integer.parseInt(toString()), 0));
+                times.add(LocalDateTime.of(now,LocalTime.of(Integer.parseInt(toString()), 0)));
             }
         }
 

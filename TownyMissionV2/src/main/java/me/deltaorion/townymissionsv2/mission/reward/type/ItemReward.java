@@ -8,6 +8,7 @@ import me.deltaorion.townymissionsv2.mission.reward.RewardType;
 import me.deltaorion.townymissionsv2.util.TownyUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.io.BukkitObjectInputStream;
@@ -54,7 +55,30 @@ public class ItemReward extends OfflinedReward {
         if(player==null)
             return;
 
-        itemStack.setAmount((int) amount);
+        int stackSize = itemStack.getType().getMaxStackSize();
+        if(amount <= stackSize) {
+            ItemStack itemStack = this.itemStack.clone();
+            itemStack.setAmount((int) amount);
+            giveItem(player,itemStack);
+        } else {
+            int stacks = (int) (amount / stackSize);
+            int leftOver = (int) (amount % stackSize);
+
+            for(int i=0;i<stacks;i++) {
+                ItemStack itemStack = this.itemStack.clone();
+                itemStack.setAmount(stackSize);
+                giveItem(player,itemStack.clone());
+            }
+
+            if(leftOver>0) {
+                ItemStack itemStack = this.itemStack.clone();
+                itemStack.setAmount(leftOver);
+                giveItem(player, itemStack);
+            }
+        }
+    }
+
+    private void giveItem(Player player, ItemStack itemStack) {
         if(player.getInventory().firstEmpty()==-1) {
             player.getWorld().dropItemNaturally(player.getLocation(),itemStack);
         } else {

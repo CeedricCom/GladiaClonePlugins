@@ -1,6 +1,5 @@
 package me.deltaorion.townymissionsv2.mission.chat;
 
-import io.papermc.paper.event.player.AsyncChatEvent;
 import me.deltaorion.townymissionsv2.TownyMissionsV2;
 import me.deltaorion.townymissionsv2.mission.Mission;
 import me.deltaorion.townymissionsv2.mission.MissionGoal;
