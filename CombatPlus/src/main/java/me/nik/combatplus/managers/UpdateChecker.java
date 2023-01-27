@@ -64,12 +64,4 @@ public class UpdateChecker extends BukkitRunnable implements Listener {
                 .replace("%current%", plugin.getDescription().getVersion())
                 .replace("%new%", newVersion));
     }
-
-    @EventHandler
-    public void onLoad(ServerLoadEvent event) {
-        plugin.onDisable();
-        plugin.onEnable();
-        Bukkit.getLogger().info(MsgType.RELOADED.getMessage());
-        Bukkit.getLogger().info("Weird Fix");
-    }
 }

@@ -1,0 +1,6 @@
+name: TabSorter
+version: '${project.version}'
+main: com.ceedric.tabsorter.TabSorter
+api-version: 1.19
+depend:
+  - PlaceholderAPI

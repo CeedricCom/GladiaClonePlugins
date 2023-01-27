@@ -4,12 +4,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>me.deltaorion</groupId>
-    <artifactId>TownySetHome</artifactId>
+    <groupId>com.ceedric</groupId>
+    <artifactId>TabSorter</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>TownySetHome</name>
+    <name>TabSorter</name>
 
     <properties>
         <java.version>1.8</java.version>
@@ -61,15 +61,14 @@
             <id>sonatype</id>
             <url>https://oss.sonatype.org/content/groups/public/</url>
         </repository>
+        <repository>
+            <id>placeholderapi</id>
+            <url>https://repo.extendedclip.com/content/repositories/placeholderapi/</url>
+        </repository>
 
         <repository>
             <id>glaremasters repo</id>
             <url>https://repo.glaremasters.me/repository/towny/</url>
-        </repository>
-
-        <repository>
-            <id>essentials-releases</id>
-            <url>https://repo.essentialsx.net/releases/</url>
         </repository>
     </repositories>
 
@@ -77,7 +76,14 @@
         <dependency>
             <groupId>io.papermc.paper</groupId>
             <artifactId>paper-api</artifactId>
-            <version>1.19.3-R0.1-SNAPSHOT</version>
+            <version>1.19.2-R0.1-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>me.clip</groupId>
+            <artifactId>placeholderapi</artifactId>
+            <version>2.11.2</version>
             <scope>provided</scope>
         </dependency>
 
@@ -87,21 +93,5 @@
             <version>0.98.5.0</version>
             <scope>provided</scope>
         </dependency>
-
-        <dependency>
-            <groupId>net.ess3</groupId>
-            <artifactId>EssentialsX</artifactId>
-            <version>2.18.2</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>io.github.townyadvanced.townycamps</groupId>
-            <artifactId>TownyCamps</artifactId>
-            <scope>system</scope>
-            <version>0.0.41</version>
-            <systemPath>${pom.basedir}/lib/TownyCamps-0.0.41.jar</systemPath>
-        </dependency>
-
     </dependencies>
 </project>

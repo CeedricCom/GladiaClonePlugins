@@ -1,0 +1,8 @@
+name: AntiSafezone
+version: ${project.version}
+main: me.cedric.antisafezone.AntiSafezone
+depend:
+  - Towny
+  - mcMMO
+  - CombatLogX
+  - SirBlobmanCore

@@ -30,7 +30,6 @@ public class DamageModifiers extends Module {
         ItemStack item = player.getInventory().getItemInMainHand();
 
         if (Config.Setting.DAMAGE_MODIFIERS_DISABLE_SWEEP.getBoolean() && e.getCause().equals(EntityDamageEvent.DamageCause.ENTITY_SWEEP_ATTACK)) {
-
             e.setCancelled(true);
 
             e.getEntity().setVelocity(ZERO_VELOCITY);
@@ -196,7 +195,6 @@ public class DamageModifiers extends Module {
                 double newDmg = damageDealt + modifiedDamage;
 
                 if (Config.Setting.DAMAGE_MODIFIERS_OLD_SHARPNESS.getBoolean() && item.containsEnchantment(Enchantment.DAMAGE_ALL)) {
-
                     double sharpLvl = item.getEnchantmentLevel(Enchantment.DAMAGE_ALL);
 
                     double oldSharpDmg = sharpLvl >= 1 ? 1 + (sharpLvl - 1) * 0.5 : 0; //1.9+
@@ -206,8 +204,10 @@ public class DamageModifiers extends Module {
                     newDmg = (newDmg + newSharpDmg - oldSharpDmg);
                 }
 
-                e.setDamage(newDmg * Config.Setting.DAMAGE_MULTIPLIER.getFloat());
+                double damage = Config.Setting.DAMAGE_MULTIPLIER.getFloat() * newDmg;
+                e.setDamage(damage);
 
+                debug(player,"Actual Damage: "+damage);
                 debug(player, "&6Item: &a" + type + " &6Old Damage: &a" + damageDealt + " &6New Damage: &a" + newDmg);
             }
         }

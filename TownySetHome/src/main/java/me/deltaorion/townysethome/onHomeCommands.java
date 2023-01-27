@@ -6,6 +6,10 @@ import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.TownBlock;
+import com.palmergames.bukkit.towny.object.WorldCoord;
+import io.github.townyadvanced.townycamps.CampsManager;
+import io.github.townyadvanced.townycamps.TownyCamps;
+import io.github.townyadvanced.townycamps.objects.Camp;
 import net.ess3.api.events.UserTeleportHomeEvent;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -33,6 +37,24 @@ public class onHomeCommands implements Listener {
                     player.sendMessage(ChatColor.RED + "You are not a registered resident");
                     return;
                 }
+
+                if (CampsManager.hasCamp(resident)) {
+                    final Camp camp = CampsManager.getCamp(WorldCoord.parseWorldCoord(player.getLocation()));
+                    if (camp == null) {
+                        player.sendMessage(ChatColor.RED + "You must be in your own camp to use this command");
+                        e.setCancelled(true);
+                        return;
+                    }
+
+                    if (!camp.equals(CampsManager.getCamp(resident))) {
+                        player.sendMessage(ChatColor.RED + "You must be in your own camp to use this command");
+                        e.setCancelled(true);
+                        return;
+                    }
+
+                    return;
+                }
+
                 final Town residentTown = resident.getTown();
                 if (TownyAPI.getInstance().isWilderness(player.getLocation())) {
                     player.sendMessage(ChatColor.RED + "You must be in your own town to use this command");
@@ -68,6 +90,23 @@ public class onHomeCommands implements Listener {
             final Resident resident = TownyUniverse.getInstance().getResident(e.getUser().getName());
             if(resident == null) {
                 player.sendMessage(ChatColor.RED+"You are not a registered resident!");
+                return;
+            }
+
+            if (CampsManager.hasCamp(resident)) {
+                final Camp camp = CampsManager.getCamp(WorldCoord.parseWorldCoord(homeLocation));
+                if (camp == null) {
+                    player.sendMessage(ChatColor.RED + "Your home is in the wilderness! You cannot teleport to it");
+                    e.setCancelled(true);
+                    return;
+                }
+
+                if (!camp.equals(CampsManager.getCamp(resident))) {
+                    player.sendMessage(ChatColor.RED + "Your home is in the wilderness! You cannot teleport to it");
+                    e.setCancelled(true);
+                    return;
+                }
+
                 return;
             }
 
