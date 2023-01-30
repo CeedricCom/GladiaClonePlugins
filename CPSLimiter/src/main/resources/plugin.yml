@@ -1,0 +1,10 @@
+name: CPSLimiter
+version: '${project.version}'
+main: me.cedric.cpslimiter.CPSLimiter
+api-version: 1.19
+depend:
+  - ProtocolLib
+commands:
+  cpslimiter:
+    permission: cpslimiter.reload
+    aliases: [cpsl]
