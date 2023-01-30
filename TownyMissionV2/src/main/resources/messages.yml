@@ -46,6 +46,7 @@ mission:
     give: '&e&lNew Objective %s'
     complete-title: '&e&lGoal Complete'
     complete-subtitle: '&f%s'
+    lock-error: "&cYou may not contribute to this mission as you have already contributed to another town/nation mission from another town. You may contribute for this town in %s"
 
   reward:
     completion: '&6Received &e%s &6%s'

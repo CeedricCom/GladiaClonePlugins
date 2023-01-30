@@ -11,6 +11,7 @@ import me.deltaorion.townymissionsv2.mission.goal.CollectiveGoal;
 import me.deltaorion.townymissionsv2.mission.goal.ContributableGoal;
 import me.deltaorion.townymissionsv2.mission.reward.GoalReward;
 import me.deltaorion.townymissionsv2.player.MissionPlayer;
+import me.deltaorion.townymissionsv2.util.DurationParser;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Item;
@@ -18,6 +19,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.time.Duration;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -25,20 +27,24 @@ import java.util.UUID;
 public class GatherGoal extends CollectiveGoal implements ContributableGoal {
 
     private final Material toGather;
+    private final MissionBearer master;
 
     public GatherGoal(GoalDefinition definition, MissionBearer master, int goal, Material toGather) {
         super(goal,master, definition);
         this.toGather = toGather;
+        this.master = master;
     }
 
     public GatherGoal(GoalDefinition definition, MissionBearer master, int goal, Material toGather, List<GoalReward> rewardList) {
         super(goal,master,definition,rewardList);
         this.toGather = toGather;
+        this.master = master;
     }
 
     protected GatherGoal(GoalDefinition definition, MissionBearer master, Mission mission , int goal, int progress, Map<UUID,Integer> contributions, Material material, List<GoalReward> rewards) {
         super(master,mission,definition,progress,goal,contributions, rewards);
         this.toGather = material;
+        this.master = master;
     }
 
     public static GatherGoal fromSave(TownyMissionsV2 plugin, Definition definition, MissionBearer master, Mission mission , int goal, int progress, Map<UUID,Integer> contributions, String materialString, List<GoalReward> rewards) {
@@ -84,6 +90,14 @@ public class GatherGoal extends CollectiveGoal implements ContributableGoal {
 
         if(isComplete())
             return;
+
+        long contributeLock = player.getContributionLockTime(master);
+        if(contributeLock > 0) {
+            player.getPlayer().sendMessage(Message.CONTRIBUTION_LOCK_ERROR.getMessage(DurationParser.print(Duration.ofMillis(contributeLock))));
+            return;
+        }
+
+        player.setContributionLock(master);
 
         int required = getGoal()-getProgress();
         int contributed = 0;

@@ -36,7 +36,6 @@ public class ContributeCommand implements SubCommand {
 
         ContributableGoal goal = (ContributableGoal) mission.getCurrentGoal();
         goal.contribute(player);
-
     }
 
     @Override

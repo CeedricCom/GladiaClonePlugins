@@ -6,6 +6,8 @@
 
 
 tick: 60s #How frequently the pool ticks, unless testing the plugin this usually shouldn't be changed
+contribution-lock: 7d
+
 pool:
   1: #Each key can be uniquely named whatever you please, it is probably better name it something meaningful
     name: 'test-1'

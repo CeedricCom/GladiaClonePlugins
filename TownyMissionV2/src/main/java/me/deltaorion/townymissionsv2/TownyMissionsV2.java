@@ -19,10 +19,13 @@ import me.deltaorion.townymissionsv2.storage.StorageImplementation;
 import me.deltaorion.townymissionsv2.storage.StorageType;
 import me.deltaorion.townymissionsv2.storage.sql.SqlStorage;
 import me.deltaorion.townymissionsv2.test.MissionTest;
+import me.deltaorion.townymissionsv2.util.DurationParser;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.Nullable;
 
+import java.time.Duration;
+import java.time.temporal.ChronoUnit;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Set;
@@ -35,6 +38,10 @@ public final class TownyMissionsV2 extends JavaPlugin implements DependencyManag
     private HashMap<String,GoalDefinition> definitions;
     private MissionPool pool;
 
+    private Duration contributionLockTime = Duration.of(7, ChronoUnit.DAYS);
+
+    private static TownyMissionsV2 instance;
+
     private boolean storing = false;
     private StorageType storageType = null;
     private boolean usingPool = false;
@@ -43,6 +50,8 @@ public final class TownyMissionsV2 extends JavaPlugin implements DependencyManag
 
     @Override
     public void onEnable() {
+
+        instance = this;
         // Plugin startup logic
         this.dependencyManager = new SimpleDependencyManager(this);
         this.playerManager = new PlayerManager(this);
@@ -83,6 +92,9 @@ public final class TownyMissionsV2 extends JavaPlugin implements DependencyManag
 
             StorageConfiguration configuration = new StorageConfiguration(this,"pool");
             this.pool = MissionPool.deserialize(configuration.getConfig(),this);
+            String lockKey = "contribution-lock";
+            if(configuration.getConfig().isString(lockKey))
+                this.contributionLockTime = DurationParser.parseDuration(configuration.getConfig().getString(lockKey));
 
         } catch (ConfigurationException e){
             getLogger().severe("-----------------------");
@@ -232,5 +244,13 @@ public final class TownyMissionsV2 extends JavaPlugin implements DependencyManag
 
     public StorageImplementation getStorage() {
         return storage;
+    }
+
+    public static TownyMissionsV2 getInstance() {
+        return instance;
+    }
+
+    public Duration getContributionLockTime() {
+        return contributionLockTime;
     }
 }

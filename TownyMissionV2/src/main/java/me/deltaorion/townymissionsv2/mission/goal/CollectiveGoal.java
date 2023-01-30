@@ -1,6 +1,7 @@
 package me.deltaorion.townymissionsv2.mission.goal;
 
 import com.google.common.base.Preconditions;
+import me.deltaorion.townymissionsv2.TownyMissionsV2;
 import me.deltaorion.townymissionsv2.bearer.MissionBearer;
 import me.deltaorion.townymissionsv2.configuration.Message;
 import me.deltaorion.townymissionsv2.display.MinecraftSound;
@@ -9,6 +10,8 @@ import me.deltaorion.townymissionsv2.mission.Mission;
 import me.deltaorion.townymissionsv2.mission.definition.GoalDefinition;
 import me.deltaorion.townymissionsv2.mission.reward.AbstractReward;
 import me.deltaorion.townymissionsv2.mission.reward.GoalReward;
+import me.deltaorion.townymissionsv2.player.MissionPlayer;
+import me.deltaorion.townymissionsv2.util.DurationParser;
 import me.deltaorion.townymissionsv2.util.RandomHelper;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -16,6 +19,7 @@ import org.bukkit.entity.Player;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.time.Duration;
 import java.util.*;
 
 public abstract class CollectiveGoal extends CompletableGoal {
@@ -23,6 +27,7 @@ public abstract class CollectiveGoal extends CompletableGoal {
     private final Map<UUID,Integer> contributions;
     private final List<GoalReward> rewards;
     private final RandomHelper random = new RandomHelper();
+    private final MissionBearer master;
 
     public CollectiveGoal(int goal, MissionBearer master, GoalDefinition definition, List<GoalReward> rewards) {
         super(goal,master,definition);
@@ -31,6 +36,8 @@ public abstract class CollectiveGoal extends CompletableGoal {
 
         this.contributions = new HashMap<>();
         this.rewards = rewards;
+
+        this.master = master;
     }
 
 
@@ -43,7 +50,7 @@ public abstract class CollectiveGoal extends CompletableGoal {
         super(master,mission,definition,amount,progress);
         this.rewards = new ArrayList<>(rewards);
         this.contributions = contributions;
-
+        this.master = master;
     }
 
     @Override
@@ -59,7 +66,6 @@ public abstract class CollectiveGoal extends CompletableGoal {
 
     @Override
     public int contribute(UUID user, int quantity) {
-
         if(quantity==0)
             return 0;
 
@@ -83,7 +89,6 @@ public abstract class CollectiveGoal extends CompletableGoal {
 
         recordContribution(user,quantity);
         displayContribution(user);
-
 
         if(isComplete()) {
             complete();

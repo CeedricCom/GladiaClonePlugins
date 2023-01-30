@@ -41,6 +41,10 @@ public class GovernmentMissionBearer extends AbstractMissionBearer implements Sa
         return government.getUUID();
     }
 
+    public Government getGovernment() {
+        return government;
+    }
+
     @Override
     public void sendMessage(String text) {
         forEachOnline(resident -> {

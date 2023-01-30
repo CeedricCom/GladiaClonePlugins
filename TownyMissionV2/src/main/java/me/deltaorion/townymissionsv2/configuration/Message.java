@@ -37,7 +37,8 @@ public enum Message {
     GOVERNMENT_COOLDOWN_SCREEN("mission.cooldown-text"),
     REWARD_MONEY_NAME("reward.money-name"),
     REWARD_EXP_NAME("reward.exp-name"),
-    REWARD_GOV_BANK_NAME("reward.government-bank-reward-name");
+    REWARD_GOV_BANK_NAME("reward.government-bank-reward-name"),
+    CONTRIBUTION_LOCK_ERROR("mission.goal.lock-error");
     ;
 
     //Mission: Status
