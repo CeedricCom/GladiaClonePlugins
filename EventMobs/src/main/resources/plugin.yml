@@ -2,3 +2,4 @@ name: EventMobs
 version: '${project.version}'
 main: com.ceedric.event.eventmobs.EventMobs
 api-version: 1.19
+depend: [MythicMobs]

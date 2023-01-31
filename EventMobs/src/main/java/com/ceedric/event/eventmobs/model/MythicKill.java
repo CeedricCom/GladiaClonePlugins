@@ -6,6 +6,7 @@ import org.bukkit.Location;
 
 public class MythicKill {
 
+    private final long time;
     private final Location location;
     private final Participant killer;
     private final Participant victim;
@@ -16,6 +17,7 @@ public class MythicKill {
         this.killer = killer;
         this.victim = victim;
         this.side = side;
+        this.time = System.currentTimeMillis();
     }
 
     public Location getLocation() {
@@ -30,7 +32,15 @@ public class MythicKill {
         return victim;
     }
 
-    public BossSide getSide() {
+    public BossSide getDeathSide() {
         return side;
+    }
+
+    public long getTime() {
+        return time;
+    }
+
+    public MythicKill clone() {
+        return new MythicKill(location,killer.clone(),victim.clone(),side);
     }
 }

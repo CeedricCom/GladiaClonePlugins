@@ -25,4 +25,8 @@ public abstract class Participant {
     }
 
     public abstract String getName();
+
+    public abstract BossSide getSide();
+
+    public abstract Participant clone();
 }

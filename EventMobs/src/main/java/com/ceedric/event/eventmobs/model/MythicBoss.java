@@ -7,28 +7,22 @@ import java.util.*;
 public class MythicBoss {
 
     private final String bossName;
-    private final List<TopNReward> rewards;
-    private final Map<UUID,Double> damageMap;
+    private final TreeSet<TopNReward> rewards;
 
     public MythicBoss(String bossName) {
         this.bossName = bossName;
-        this.rewards = new ArrayList<>();
-        this.damageMap = new HashMap<>();
+        this.rewards = new TreeSet<>(Comparator.comparingInt(TopNReward::getN));
     }
 
     public Collection<TopNReward> getRewards() {
-        return Collections.unmodifiableList(rewards);
+        return Collections.unmodifiableSet(rewards);
     }
 
-    public void addDamage(UUID player, double damage) {
-        Double value = damageMap.get(player);
-        if(value==null) {
-            this.damageMap.put(player,damage);
-        } else {
-            this.damageMap.put(player,damage + value);
-        }
+    public void addReward(TopNReward reward) {
+        this.rewards.add(reward);
     }
 
-    public
-
+    public String getBossName() {
+        return bossName;
+    }
 }

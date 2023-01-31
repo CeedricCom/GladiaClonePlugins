@@ -9,8 +9,8 @@ public class MythicParticipant extends Participant {
 
     private final String name;
 
-    protected MythicParticipant(MythicMob mob) {
-        super(new UUID(mob.getInternalName().hashCode(),mob.getInternalName().hashCode()));
+    public MythicParticipant(MythicMob mob) {
+        super(getId(mob));
         this.name = mob.getInternalName();
     }
 
@@ -23,7 +23,22 @@ public class MythicParticipant extends Participant {
         return mob.getDisplayName().get();
     }
 
+    @Override
+    public BossSide getSide() {
+        return BossSide.BOSS;
+    }
+
     public MythicMob getMob() {
         return MythicBukkit.inst().getMobManager().getMythicMob(name).orElse(null);
+    }
+
+    public static UUID getId(MythicMob mob ) {
+        return new UUID(mob.getInternalName().hashCode(),mob.getInternalName().hashCode());
+    }
+
+    public MythicParticipant clone() {
+        MythicParticipant participant = new MythicParticipant(getMob());
+        participant.addDamage(getDamage());
+        return participant;
     }
 }
