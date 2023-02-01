@@ -22,6 +22,9 @@ public class EventCommand extends FunctionalCommand {
         registerArgument("view",new ViewCommand(plugin));
         registerArgument("distribute",new DistributeCommand(plugin));
         registerArgument("report",new ReportCommand(plugin));
+        registerArgument("reload",new ReloadCommand(plugin));
+        registerArgument("item",new ItemCommand(plugin));
+        registerArgument("skull",new SkullCommand());
     }
 
     @Override

@@ -6,6 +6,7 @@ import com.ceedric.event.eventmobs.config.YamlMythicConfig;
 import com.ceedric.event.eventmobs.controller.Listeners;
 import com.ceedric.event.eventmobs.controller.WorldService;
 import com.ceedric.event.eventmobs.controller.command.EventCommand;
+import com.ceedric.event.eventmobs.item.MartianStaff;
 import com.ceedric.event.eventmobs.model.BossWorld;
 import com.ceedric.event.eventmobs.model.MythicBoss;
 import com.ceedric.event.eventmobs.model.participant.BossSide;
@@ -41,6 +42,8 @@ public final class EventMobs extends BukkitPlugin  {
 
         registerCommand(new EventCommand(this),"alienevent");
         getServer().getPluginManager().registerEvents(new Listeners(world,service),this);
+
+        getCustomItemManager().registerItem(new MartianStaff());
     }
 
     private void loadConfig() {
@@ -52,7 +55,14 @@ public final class EventMobs extends BukkitPlugin  {
         for(Map.Entry<BossSide,String> name : config.getNames().entrySet()) {
             name.getKey().setFormattedName(name.getValue());
         }
-     }
+
+        this.world.setWorld(config.getWorld());
+    }
+
+    public void reloadIConfig() {
+        this.config.reload();
+        loadConfig();
+    }
 
     private MythicConfig createConfig() {
         /*
