@@ -1,0 +1,4 @@
+name: EventCommands
+version: '${project.version}'
+main: me.deltaorion.eventcommands.EventCommandsPlugin
+api-version: 1.19

@@ -1,0 +1,21 @@
+spawns:
+  alien:
+    world: 'invasion'
+    location:
+      x: 100
+      y: 100
+      z: 100
+      yaw: 0
+      pitch: 0
+    display-name: '&e&lAlien Invasion'
+    command-name: 'Aliens'
+  test:
+    world: 'world'
+    location:
+      x: 100
+      y: 100
+      z: 100
+      yaw: 0
+      pitch: 0
+    display-name: '&6&lTest'
+    command-name: 'Test'
