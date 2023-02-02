@@ -1,8 +1,9 @@
 package com.ceedric.event.eventmobs.view.report;
 
-import com.ceedric.event.eventmobs.model.BossWorld;
-import com.ceedric.event.eventmobs.model.MythicKill;
-import com.ceedric.event.eventmobs.model.participant.BossSide;
+import com.ceedric.event.eventmobs.model.Event;
+import com.ceedric.event.eventmobs.model.EventKill;
+import com.ceedric.event.eventmobs.model.Side;
+import com.ceedric.event.eventmobs.model.boss.BossSideEnum;
 import com.ceedric.event.eventmobs.model.participant.Participant;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
@@ -21,7 +22,7 @@ import java.util.Map;
 
 public class CSVReportGenerator implements ReportGenerator {
     @Override
-    public void generate(Writer writer, BossWorld world) throws IOException {
+    public void generate(Writer writer, Event world) throws IOException {
         try (CSVPrinter printer = new CSVPrinter(writer, CSVFormat.EXCEL)) {
             printHeader(printer,world);
             printMainStatTable(printer,world);
@@ -29,39 +30,47 @@ public class CSVReportGenerator implements ReportGenerator {
         }
     }
 
-    private void printKillOverTime(CSVPrinter printer, BossWorld world) throws IOException {
+    private void printKillOverTime(CSVPrinter printer, Event world) throws IOException {
         //defender death = attacker kill
         printer.println();
         printer.printRecord("Kills over time");
-        printer.printRecord("time",BossSide.PLAYERS.getFormattedName(),BossSide.BOSS.getFormattedName());
 
-        Map<Integer,Integer> attackerKills = new HashMap<>();
-        Map<Integer,Integer> defenderKills = new HashMap<>();
+        Map<Side,Map<Integer,Integer>> kills = new HashMap<>();
 
         long maxTime = 0;
-        for(MythicKill kill : world.getKills()) {
-            int time = (int) getGraphTime(world.getEventStart(),kill.getTime());
+        for(EventKill kill : world.getKills()) {
+            int time = (int) getGraphTime(world.getStartTime(),kill.getTime());
             if(time > maxTime)
                 maxTime = time;
 
-            switch (opposite(kill.getDeathSide())) {
-                case BOSS -> {
-                    attackerKills.merge(time, 1, Integer::sum);
-                } case PLAYERS -> {
-                    defenderKills.merge(time, 1, Integer::sum);
-                }
-            }
+            Side killSide = kill.getDeathSide().getOpposite();
+            Map<Integer, Integer> side = kills.computeIfAbsent(killSide, k -> new HashMap<>());
+            side.merge(time, 1, Integer::sum);
         }
+
+        List<String> header = new ArrayList<>();
+        header.add("time");
+        for(Side side : kills.keySet()) {
+            header.add(side.getFormattedName());
+        }
+
+        printer.printRecord(header);
 
         for(int i=0;i<=maxTime;i++) {
             if(i>10000)
                 break;
 
-            printer.printRecord(i,attackerKills.getOrDefault(i,0),defenderKills.getOrDefault(i,0));
+            List<Object> row = new ArrayList<>();
+            row.add(i);
+            for(Map<Integer,Integer> entry : kills.values()) {
+                row.add(entry.getOrDefault(i,0));
+            }
+
+            printer.printRecord(row);
         }
     }
 
-    private void printMainStatTable(CSVPrinter printer, BossWorld world) throws IOException {
+    private void printMainStatTable(CSVPrinter printer, Event world) throws IOException {
         printer.printRecord("Participant Logs","","","","","","Kill Logs","","","","","");
         //participant logs sorted by damage
         printer.printRecord("Player","Damage","Kills","Deaths","KDR","","Time (h)","Killer Side","Killer","Victim","Location");
@@ -76,20 +85,20 @@ public class CSVReportGenerator implements ReportGenerator {
         }
 
         //extract KD from each participant and log kills
-        for(MythicKill kill : world.getKills()) {
+        for(EventKill kill : world.getKills()) {
             StatPlayer killer = players.get(kill.getKiller());
             StatPlayer victim = players.get(kill.getVictim());
 
             killer.kills++;
             victim.deaths++;
 
-            String time = formatTime(world.getEventStart(),kill.getTime());
+            String time = formatTime(world.getStartTime(),kill.getTime());
 
             List<String> row = new ArrayList<>();
             killRows.add(row);
             row.add(time);
             //attacker death = defender kill
-            row.add(opposite(kill.getDeathSide()).getFormattedName());
+            row.add(kill.getDeathSide().getOpposite().getFormattedName());
             row.add(ChatColor.stripColor(kill.getKiller().getName()));
             row.add(ChatColor.stripColor(kill.getVictim().getName()));
             row.add("("+format(kill.getLocation().getX())+", "+format(kill.getLocation().getY())+", "+format(kill.getLocation().getZ())+")");
@@ -136,24 +145,25 @@ public class CSVReportGenerator implements ReportGenerator {
         }
     }
 
-    private BossSide opposite(BossSide deathSide) {
-        if(deathSide.equals(BossSide.PLAYERS))
-            return BossSide.BOSS;
+    private BossSideEnum opposite(BossSideEnum deathSide) {
+        if(deathSide.equals(BossSideEnum.PLAYERS))
+            return BossSideEnum.BOSS;
 
-        if(deathSide.equals(BossSide.BOSS))
-            return BossSide.PLAYERS;
+        if(deathSide.equals(BossSideEnum.BOSS))
+            return BossSideEnum.PLAYERS;
 
-        return BossSide.NOBODY;
+        return BossSideEnum.NOBODY;
     }
 
-    private void printHeader(CSVPrinter printer, BossWorld world) throws IOException {
+    private void printHeader(CSVPrinter printer, Event event) throws IOException {
 
-        printer.printRecord("Aliens vs Humans");
+        //display name
+        printer.printRecord(ChatColor.stripColor(event.getDisplayName()));
         printer.println();
 
-        printer.printRecord("Attacker",BossSide.BOSS.getFormattedName());
-        printer.printRecord("Defender",BossSide.PLAYERS.getFormattedName());
-        printer.printRecord("Winner",BossSide.PLAYERS.getFormattedName());
+        printer.printRecord("Attacker", BossSideEnum.BOSS.getFormattedName());
+        printer.printRecord("Defender", BossSideEnum.PLAYERS.getFormattedName());
+        printer.printRecord("Winner", event.getWinner().getFormattedName());
         printer.println();
     }
 

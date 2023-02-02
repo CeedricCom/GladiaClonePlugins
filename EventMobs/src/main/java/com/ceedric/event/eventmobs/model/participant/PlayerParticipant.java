@@ -1,5 +1,6 @@
 package com.ceedric.event.eventmobs.model.participant;
 
+import com.ceedric.event.eventmobs.model.boss.BossSideEnum;
 import com.ceedric.event.eventmobs.model.reward.Reward;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -35,11 +36,6 @@ public class PlayerParticipant extends Participant {
             return "";
 
         return player.getName();
-    }
-
-    @Override
-    public BossSide getSide() {
-        return BossSide.PLAYERS;
     }
 
     public Collection<Reward> getOfflineRewards() {

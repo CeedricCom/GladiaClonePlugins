@@ -1,5 +1,5 @@
 name: EventMobs
 version: '${project.version}'
-main: com.ceedric.event.eventmobs.EventMobs
+main: com.ceedric.event.eventmobs.EventsPlugin
 api-version: 1.19
 depend: [MythicMobs,NBTAPI,SiegeWar]

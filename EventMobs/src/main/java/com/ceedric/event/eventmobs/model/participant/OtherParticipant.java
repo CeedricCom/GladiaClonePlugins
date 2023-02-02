@@ -1,5 +1,7 @@
 package com.ceedric.event.eventmobs.model.participant;
 
+import com.ceedric.event.eventmobs.model.boss.BossSideEnum;
+
 import java.util.UUID;
 
 public class OtherParticipant extends Participant {
@@ -14,11 +16,6 @@ public class OtherParticipant extends Participant {
     @Override
     public String getName() {
         return "#" + name;
-    }
-
-    @Override
-    public BossSide getSide() {
-        return BossSide.NOBODY;
     }
 
     public static UUID getId(String name) {

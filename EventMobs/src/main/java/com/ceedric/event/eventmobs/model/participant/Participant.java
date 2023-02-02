@@ -1,5 +1,7 @@
 package com.ceedric.event.eventmobs.model.participant;
 
+import com.ceedric.event.eventmobs.model.Side;
+
 import java.util.UUID;
 
 public abstract class Participant {
@@ -25,8 +27,6 @@ public abstract class Participant {
     }
 
     public abstract String getName();
-
-    public abstract BossSide getSide();
 
     public abstract Participant clone();
 }

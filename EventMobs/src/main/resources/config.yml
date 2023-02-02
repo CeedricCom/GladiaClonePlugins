@@ -1,17 +1,20 @@
-world: 'world'
-boss: 'Alien'
-spawn-location:
-  x: 130
-  y: 90
-  z: -72
-
 names:
   boss: 'Aliens'
   players: 'Humans'
 
-bosses:
-  Alien:
-    name: 'Alien'
+events:
+  AlienInvasion:
+    type: 'BOSS'
+    world: 'invasion'
+    display-name: '&e&lAlien Invasion'
+    bosses:
+      1:
+        name: 'Alien'
+        spawn-location:
+          x: 130
+          y: 90
+          z: -72
+
     topNRewards:
       top1:
         n: 1

@@ -1,11 +1,13 @@
 package com.ceedric.event.eventmobs.model.reward;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-public class TopNReward {
+public class TopNReward implements Comparable<TopNReward> {
 
     private final int n;
     private final List<Reward> rewards;
@@ -29,5 +31,10 @@ public class TopNReward {
 
     public int getN() {
         return n;
+    }
+
+    @Override
+    public int compareTo(@NotNull TopNReward o) {
+        return Integer.compare(o.getN(),this.getN());
     }
 }

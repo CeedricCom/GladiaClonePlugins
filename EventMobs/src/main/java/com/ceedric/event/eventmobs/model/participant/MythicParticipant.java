@@ -1,5 +1,6 @@
 package com.ceedric.event.eventmobs.model.participant;
 
+import com.ceedric.event.eventmobs.model.boss.BossSideEnum;
 import io.lumine.mythic.api.mobs.MythicMob;
 import io.lumine.mythic.bukkit.MythicBukkit;
 
@@ -21,11 +22,6 @@ public class MythicParticipant extends Participant {
             return "";
 
         return mob.getDisplayName().get();
-    }
-
-    @Override
-    public BossSide getSide() {
-        return BossSide.BOSS;
     }
 
     public MythicMob getMob() {

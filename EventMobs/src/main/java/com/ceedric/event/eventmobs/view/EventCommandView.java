@@ -1,8 +1,8 @@
 package com.ceedric.event.eventmobs.view;
 
-import com.ceedric.event.eventmobs.model.BossWorld;
-import com.ceedric.event.eventmobs.model.MythicKill;
-import com.ceedric.event.eventmobs.model.participant.BossSide;
+import com.ceedric.event.eventmobs.model.Event;
+import com.ceedric.event.eventmobs.model.EventKill;
+import com.ceedric.event.eventmobs.model.boss.BossSideEnum;
 import com.ceedric.event.eventmobs.model.participant.Participant;
 import me.deltaorion.common.plugin.sender.Sender;
 import org.bukkit.ChatColor;
@@ -20,22 +20,22 @@ public class EventCommandView {
 
     private final DateFormat dmy = new SimpleDateFormat("dd/MM/yyyy");
 
-    public void displayWorld(Sender sender, BossWorld world) {
+    public void displayEvent(Sender sender, Event world) {
         sender.sendMessage(ChatColor.YELLOW + "---oO Boss Stats Oo---");
-        displayStat(sender,"Time",dmy.format(new Date(world.getEventStart())));
+        displayStat(sender,"Time",dmy.format(new Date(world.getStartTime())));
 
-        for(MythicKill kill : world.getKills()) {
+        for(EventKill kill : world.getKills()) {
             displayKill(sender,world,kill);
         }
     }
 
-    private void displayKill(Sender sender, BossWorld world,MythicKill kill) {
+    private void displayKill(Sender sender, Event world, EventKill kill) {
         Location location = kill.getLocation();
         ChatColor sideColor = ChatColor.GREEN;
-        if(kill.getDeathSide().equals(BossSide.PLAYERS))
+        if(kill.getDeathSide().equals(BossSideEnum.PLAYERS))
             sideColor = ChatColor.RED;
 
-        sender.sendMessage("["+ getRelativeTime(world.getEventStart(),kill.getTime()) + "] [" + sideColor + kill.getDeathSide().getFormattedName() + " Death] " + ChatColor.GOLD +kill.getKiller().getName()+ChatColor.YELLOW+" killed "+ ChatColor.GOLD + kill.getVictim().getName()+ChatColor.YELLOW+" at "+"("+format(location.getX())+", "+format(location.getY())+", "+format(location.getZ())+")");
+        sender.sendMessage("["+ getRelativeTime(world.getStartTime(),kill.getTime()) + "] [" + sideColor + kill.getDeathSide().getFormattedName() + " Death] " + ChatColor.GOLD +kill.getKiller().getName()+ChatColor.YELLOW+" killed "+ ChatColor.GOLD + kill.getVictim().getName()+ChatColor.YELLOW+" at "+"("+format(location.getX())+", "+format(location.getY())+", "+format(location.getZ())+")");
     }
 
     private String format(double val) {
@@ -55,11 +55,11 @@ public class EventCommandView {
         sender.sendMessage(ChatColor.GOLD+title+": "+ChatColor.WHITE+value);
     }
 
-    public void displayParticipant(Sender sender ,BossWorld world, Participant participant) {
+    public void displayParticipant(Sender sender , Event world, Participant participant) {
         sender.sendMessage(ChatColor.YELLOW + "---oO "+ ChatColor.WHITE + participant.getName() + ChatColor.YELLOW + " Oo---");
         displayStat(sender,"Damage", String.valueOf(participant.getDamage()));
         int kills = 0;
-        for(MythicKill kill : world.getKills()) {
+        for(EventKill kill : world.getKills()) {
             if(kill.getKiller().equals(participant)) {
                 displayKill(sender,world,kill);
                 kills++;
