@@ -1,5 +1,6 @@
 package com.ceedric.event.eventmobs.controller;
 
+import com.ceedric.event.eventmobs.StringUtil;
 import com.ceedric.event.eventmobs.model.BossWorld;
 import com.ceedric.event.eventmobs.model.MythicBoss;
 import com.ceedric.event.eventmobs.model.MythicKill;
@@ -37,7 +38,8 @@ public class WorldService {
                     if (count < reward.getN()) {
                         if(!sendTopNMessage) {
                             if(bukkitPlayer!=null) {
-                                bukkitPlayer.sendMessage(ChatColor.GOLD + "You have received the following rewards for being the " + ChatColor.YELLOW + "top "+reward.getN()+ChatColor.GOLD+" damagers");
+                                bukkitPlayer.sendMessage(ChatColor.GOLD + "You have received the following rewards for being the " + ChatColor.YELLOW + "top "
+                                        + StringUtil.getOrdinal(count+1) +ChatColor.GOLD+" damager");
                             }
                             sendTopNMessage = true;
                         }
@@ -46,7 +48,7 @@ public class WorldService {
                                 player.addReward(r);
                             } else {
                                 r.giveReward(bukkitPlayer);
-                                bukkitPlayer.sendMessage(" - "+r.getName());
+                                bukkitPlayer.sendMessage(" - "+ChatColor.translateAlternateColorCodes('&',r.getName()));
                             }
                         }
                     }

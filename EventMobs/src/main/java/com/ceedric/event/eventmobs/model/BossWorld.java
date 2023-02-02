@@ -19,7 +19,7 @@ public class BossWorld {
     private final Map<String,MythicBoss> bosses;
     private final List<MythicKill> kills;
     private final Map<UUID, Participant> participants;
-    private final World world;
+    private World world;
     private long eventStart;
 
     public BossWorld(World world) {
@@ -152,5 +152,9 @@ public class BossWorld {
         }
 
         return world;
+    }
+
+    public void setWorld(World world) {
+        this.world = world;
     }
 }

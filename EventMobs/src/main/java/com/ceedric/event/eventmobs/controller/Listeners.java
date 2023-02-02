@@ -6,6 +6,9 @@ import com.ceedric.event.eventmobs.model.MythicBoss;
 import com.ceedric.event.eventmobs.model.participant.PlayerParticipant;
 import com.ceedric.event.eventmobs.model.reward.Reward;
 import io.lumine.mythic.bukkit.events.MythicMobDeathEvent;
+import org.bukkit.Bukkit;
+import org.bukkit.World;
+import org.bukkit.WorldCreator;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
@@ -48,6 +51,8 @@ public class Listeners implements Listener {
                     damager = e;
             }
         }
+
+
 
         service.recordDamage(event.getEntity().getLocation(),damager,event.getEntity(),cause,event.getFinalDamage());
     }
