@@ -1,7 +1,6 @@
 package com.ceedric.event.eventmobs.controller.command.admin;
 
 import com.ceedric.event.eventmobs.EventsPlugin;
-import com.ceedric.event.eventmobs.Permissions;
 import me.deltaorion.common.command.Command;
 import me.deltaorion.common.command.CommandException;
 import me.deltaorion.common.command.FunctionalCommand;
@@ -24,7 +23,7 @@ public class AdminCommand extends FunctionalCommand {
         registerArgument("report",new ReportCommand(plugin));
         registerArgument("reload",new ReloadCommand(plugin));
         registerArgument("item",new ItemCommand(plugin));
-        registerArgument("skull",new SkullCommand());
+        registerArgument("skull",new SkullCommand(plugin));
     }
 
     @Override

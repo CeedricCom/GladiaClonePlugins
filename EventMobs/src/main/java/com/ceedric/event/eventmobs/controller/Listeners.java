@@ -52,7 +52,7 @@ public class Listeners implements Listener {
             if(e.getWorld().equals(event.getWorld())) {
                 if(e instanceof KothEvent kothEvent) {
                     kothEvent.recordWinner(event.getCapper());
-                    Bukkit.broadcastMessage(ChatColor.YELLOW+"The KOTH has ended with "+ChatColor.GOLD+kothEvent.getWinner().getFormattedName()+ChatColor.YELLOW+"coming out victorious with '"+event.getCapper()+"' capturing the hill");
+                    Bukkit.broadcastMessage(ChatColor.YELLOW+"The KOTH has ended with team "+ChatColor.GOLD+kothEvent.getWinner().getFormattedName()+ChatColor.YELLOW+" coming out victorious by '"+event.getCapper()+"' capturing the point");
                     service.distributeRewards(kothEvent);
                     break;
                 }
@@ -188,7 +188,7 @@ public class Listeners implements Listener {
                 return;
 
             for (Reward reward : player.getOfflineRewards()) {
-                reward.giveReward(event.getPlayer());
+                reward.giveReward(player);
             }
 
             player.clearRewards();

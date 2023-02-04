@@ -25,7 +25,7 @@ public class WarScheduleCommand implements CommandExecutor {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         sender.sendMessage(ChatColor.GREEN +"---oO SiegeWar Schedule Oo---");
         sender.sendMessage(ChatColor.GOLD + "Battle Session Duration: " + ChatColor.WHITE +SiegeWarSettings.getWarSiegeBattleSessionsDurationMinutes() +"m");
-        sender.sendMessage(ChatColor.GOLD + "Timezone: "+ChatColor.WHITE + "UTC");
+        sender.sendMessage(ChatColor.GOLD + "Timezone: "+ChatColor.WHITE + "CET");
         String weekDaySessions = SiegeWarSettings.getWarSiegeBattleSessionWeekdayStartTimes();
         String weekEndSessions = SiegeWarSettings.getWarSiegeBattleSessionWeekendStartTimes();
         if (weekEndSessions.equals(weekDaySessions)) {

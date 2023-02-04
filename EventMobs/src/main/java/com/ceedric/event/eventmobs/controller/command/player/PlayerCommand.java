@@ -17,6 +17,7 @@ public class PlayerCommand extends FunctionalCommand {
     public PlayerCommand(EventsPlugin plugin) {
         super("");
         this.plugin = plugin;
+        registerArgument("claim",new ClaimCommand(plugin));
     }
 
     @Override
@@ -29,11 +30,16 @@ public class PlayerCommand extends FunctionalCommand {
 
     public void deregister() {
         for(String arg : getCommandArgs()) {
-            deregisterArgument(arg);
+            if(!arg.equals("claim")) {
+                deregisterArgument(arg);
+            }
         }
     }
 
     public void register(Event event) {
+        if(event.getCommandName().equals("claim"))
+            throw new IllegalArgumentException("Cannot register event with command name '"+event.getCommandName()+"'");
+
         registerArgument(event.getCommandName(),new SpawnCommand(event));
     }
 }

@@ -3,6 +3,7 @@ package com.ceedric.event.eventmobs.item;
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
+import com.palmergames.bukkit.towny.TownyAPI;
 import me.deltaorion.bukkit.item.EMaterial;
 import me.deltaorion.bukkit.item.ItemBuilder;
 import me.deltaorion.bukkit.item.custom.CustomItem;
@@ -29,15 +30,15 @@ public class MartianStaff extends CustomItem {
         .addEnchantment(Enchantment.CHANNELING,1)
         .addEnchantment(Enchantment.DURABILITY,3)
                 .addEnchantment(Enchantment.MENDING,1)
-                .setDisplayName(ChatColor.GOLD+""+ChatColor.BOLD+"Staff of Martia")
+                .setDisplayName(ChatColor.DARK_RED+""+ChatColor.BOLD+"Staff of Martia")
                 .addLoreLine("")
-                .addLoreLine(ChatColor.DARK_GRAY+"The staff, once yielded by Mater Martia")
-                .addLoreLine(ChatColor.DARK_GRAY+"is a weapon of extreme power")
+                .addLoreLine(ChatColor.GRAY+"The staff, once yielded by Mater Martia.")
+                .addLoreLine(ChatColor.GRAY+"It is a lethal weapon of extreme power")
                 .addLoreLine("")
                 .addLoreLine(ChatColor.YELLOW+"Right click on your enemy to launch")
                 .addLoreLine(ChatColor.YELLOW+"them away with great strength!")
                 .addLoreLine("")
-                .addLoreLine(ChatColor.DARK_RED+"Does not work in siegezones!")
+                .addLoreLine(ChatColor.RED+"Does not work in siegezones!")
                 .build());
     }
 
@@ -68,9 +69,10 @@ public class MartianStaff extends CustomItem {
         Vector norm = dir.normalize();
         norm = norm.setY(-0.3);
 
-        entity.setVelocity(norm.multiply(-1.5f));
-        entity.damage(45);
-
+        entity.damage(30,event.getPlayer());
+        TownyAPI.getInstance().getTown(entity.getLocation());
+        if(TownyAPI.getInstance().isWilderness(entity.getLocation()))
+            entity.setVelocity(norm.multiply(-1.5f));
         Location l = event.getPlayer().getLocation();
         World world = l.getWorld();
         world.playSound(l, Sound.ENTITY_WARDEN_SONIC_BOOM,1.5f,1f);

@@ -1,5 +1,6 @@
 package com.ceedric.event.eventmobs.model.reward;
 
+import com.ceedric.event.eventmobs.model.participant.PlayerParticipant;
 import me.deltaorion.common.locale.message.Message;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -15,7 +16,7 @@ public class CommandReward implements Reward {
     }
 
     @Override
-    public void giveReward(Player player) {
+    public void giveReward(PlayerParticipant player) {
         String cmd = Message.valueOf(command).toString(player.getName());
         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), cmd);
     }

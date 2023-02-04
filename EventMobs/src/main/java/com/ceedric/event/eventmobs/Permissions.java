@@ -13,6 +13,7 @@ public class Permissions {
     public static final String SKULL_COMMAND = COMMAND+".skull";
 
     public static final String PLAYER_COMMAND = "eventmobs.player";
-    public static final String SPAWN_COMMAND = "eventmobs.player.spawn";
+    public static final String SPAWN_COMMAND = PLAYER_COMMAND + ".spawn";
     public static final String BYPASS = BASE + ".bypass";
+    public static final String CLAIM_COMMAND = PLAYER_COMMAND + ".claim";
 }

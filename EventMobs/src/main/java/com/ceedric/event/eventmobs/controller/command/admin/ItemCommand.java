@@ -2,6 +2,10 @@ package com.ceedric.event.eventmobs.controller.command.admin;
 
 import com.ceedric.event.eventmobs.EventsPlugin;
 import com.ceedric.event.eventmobs.Permissions;
+import com.ceedric.event.eventmobs.model.Event;
+import com.ceedric.event.eventmobs.model.participant.Participant;
+import com.ceedric.event.eventmobs.model.participant.PlayerParticipant;
+import com.ceedric.event.eventmobs.model.reward.ItemReward;
 import me.deltaorion.bukkit.item.custom.CustomItem;
 import me.deltaorion.common.command.CommandException;
 import me.deltaorion.common.command.FunctionalCommand;
@@ -20,21 +24,23 @@ public class ItemCommand extends FunctionalCommand {
 
     @Override
     public void commandLogic(SentCommand command) throws CommandException {
-        Player player = command.getArgOrFail(0).parse(Player.class);
-        if(player==null)
-            return;
+        String eventName = command.getArgOrFail(0).asString();
+        Event event = plugin.getService().getEvent(eventName);
+        if(event==null)
+            throw new CommandException("Unknown event '"+eventName+"'");
 
-        String itemName = command.getArgOrFail(1).asString();
+        Participant participant = event.getParticipantByName(command.getArgOrFail(1).asString());
+        if(!(participant instanceof PlayerParticipant player))
+            throw new CommandException("Participant is not a player");
+
+        String itemName = command.getArgOrFail(2).asString();
         CustomItem generator = plugin.getCustomItemManager().getItem(itemName);
 
         if(generator==null)
             throw new CommandException("Unknown Item '"+itemName+"'");
 
         ItemStack itemStack = generator.newCustomItem();
-        if (player.getInventory().firstEmpty() == -1) {
-            player.getWorld().dropItemNaturally(player.getLocation(), itemStack);
-        } else {
-            player.getInventory().addItem(itemStack);
-        }
+        ItemReward reward = new ItemReward(itemStack.getItemMeta().getDisplayName(),itemStack,1);
+        reward.giveReward(player);
     }
 }

@@ -1,5 +1,6 @@
 package com.ceedric.event.eventmobs.model.reward;
 
+import com.ceedric.event.eventmobs.model.participant.PlayerParticipant;
 import me.deltaorion.common.locale.message.Message;
 import net.kyori.adventure.text.Component;
 import org.bukkit.ChatColor;
@@ -22,7 +23,8 @@ public class ItemReward implements Reward {
     }
 
     @Override
-    public void giveReward(Player player) {
+    public void giveReward(PlayerParticipant player) {
+        Player bukkitPlayer = player.getPlayer();
         ItemStack clone = itemStack.clone();
         List<String> lore = clone.getLore();
         List<String> newLore = new ArrayList<>();
@@ -40,10 +42,10 @@ public class ItemReward implements Reward {
         }
 
         for(int i=0;i<amount;i++) {
-            if (player.getInventory().firstEmpty() == -1) {
-                player.getWorld().dropItemNaturally(player.getLocation(), clone);
+            if (bukkitPlayer.getInventory().firstEmpty() == -1) {
+                player.addClaimable(clone);
             } else {
-                player.getInventory().addItem(clone);
+                bukkitPlayer.getInventory().addItem(clone);
             }
         }
     }

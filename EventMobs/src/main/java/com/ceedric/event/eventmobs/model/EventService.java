@@ -73,7 +73,7 @@ public class EventService {
                             if(bukkitPlayer==null) {
                                 player.addReward(r);
                             } else {
-                                r.giveReward(bukkitPlayer);
+                                r.giveReward(player);
                                 bukkitPlayer.sendMessage(" - "+ChatColor.translateAlternateColorCodes('&',r.getName()));
                             }
                         }
