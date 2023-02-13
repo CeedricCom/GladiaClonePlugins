@@ -18,10 +18,12 @@ import java.util.*;
 public class BossEvent extends Event {
 
     private final List<BossStart> startEntities;
+    private final Map<BossSideEnum,String> names;
 
     public BossEvent(String name, World world) {
         super(name,world);
         this.startEntities = new ArrayList<>();
+        this.names = new HashMap<>();
     }
 
     @Override
@@ -44,7 +46,7 @@ public class BossEvent extends Event {
         if(side.equals(BossSideEnum.NOBODY))
             return;
 
-        addKill(new EventKill(location,killer,victim,new BossSide(side)));
+        addKill(new EventKill(location,killer,victim,new BossSide(side, names)));
     }
 
     private BossSideEnum getSide(Participant victim) {
@@ -80,7 +82,6 @@ public class BossEvent extends Event {
     }
 
     public void startEvent() {
-        System.out.println(getStartEntities());
         for(BossStart start : startEntities) {
             if(start.getBossMob() == null) {
                 Bukkit.getLogger().severe("Could not find boss of '"+start.getBossName()+"'");
@@ -92,7 +93,7 @@ public class BossEvent extends Event {
 
     @Override
     public Side getWinner() {
-        return new BossSide(BossSideEnum.PLAYERS);
+        return new BossSide(BossSideEnum.PLAYERS, names);
     }
 
     @Override
@@ -120,5 +121,9 @@ public class BossEvent extends Event {
 
     public void addBossStart(BossStart start) {
         this.startEntities.add(start);
+    }
+
+    public void addName(BossSideEnum side, String name) {
+        this.names.put(side,name);
     }
 }

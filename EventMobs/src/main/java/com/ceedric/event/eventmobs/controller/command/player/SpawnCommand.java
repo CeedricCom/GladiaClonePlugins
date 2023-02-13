@@ -23,6 +23,9 @@ public class SpawnCommand extends FunctionalCommand {
         if(command.getSender().isConsole())
             throw new CommandException("Only players may use this command");
 
+        if(!event.isEnabled())
+            throw new CommandException("This event is currently not running!");
+
         Player player = Bukkit.getPlayer(command.getSender().getUniqueId());
         if(event.spawn(player))
             command.getSender().sendMessage("Teleported you to "+event.getDisplayName());

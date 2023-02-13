@@ -32,6 +32,7 @@ public class GiveConsumeScrollCommand extends FunctionalCommand {
         registerArgument("random",new RandomGiveCommand());
         registerArgument("name",new ScrollGiveCommand());
         registerArgument("rarity",new RarityGiveCommand());
+        registerArgument("matrix",new RarityMatrixGiveCommand(pool, generator));
     }
 
     @Override

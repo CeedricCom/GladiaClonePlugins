@@ -27,6 +27,8 @@ public abstract class Event {
     private String commandName;
     private Location spawnLocation;
 
+    public boolean enabled = true;
+
     public Event(String name, World world) {
         this.name = name;
         this.world = world;
@@ -101,8 +103,8 @@ public abstract class Event {
         return Collections.unmodifiableList(kills);
     }
 
-    public void setEventStart() {
-        this.startTime = System.currentTimeMillis();
+    public void setEventStart(long eventStart) {
+        this.startTime = eventStart;
     }
 
     public long getStartTime() {
@@ -148,7 +150,8 @@ public abstract class Event {
         }
 
         for(EventKill kill : getKills()) {
-            clone.addKill(new EventKill(kill.getLocation(),
+            clone.addKill(new EventKill(kill.getTime(),
+                    kill.getLocation(),
                     clone.getParticipant(kill.getKiller().getUniqueId()),
                     clone.getParticipant(kill.getVictim().getUniqueId()),
                     kill.getDeathSide()));
@@ -206,6 +209,14 @@ public abstract class Event {
 
     public void setSpawnLocation(Location spawnLocation) {
         this.spawnLocation = spawnLocation;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
     public abstract boolean spawn(Player player);

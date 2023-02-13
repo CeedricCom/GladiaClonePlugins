@@ -25,22 +25,17 @@ public class YamlEventConfig implements EventConfig {
 
     private final EventsPlugin plugin;
     private final List<Event> events;
-    private final Map<BossSideEnum,String> names;
 
     public YamlEventConfig(EventsPlugin plugin) {
         this.plugin = plugin;
         this.events = new ArrayList<>();
-        this.names = new HashMap<>();
 
         reload();
     }
 
     private void loadConfig() {
         events.clear();
-        names.clear();
-
         FileConfiguration configuration = plugin.getConfig();
-        names.putAll(loadNames(configuration.getConfigurationSection("names")));
         events.addAll(loadEvents(configuration.getConfigurationSection("events")));
     }
 
@@ -93,10 +88,12 @@ public class YamlEventConfig implements EventConfig {
         String commandName = eventSection.getString("command-name");
         String displayName = ChatColor.translateAlternateColorCodes('&',eventSection.getString("display-name"));
         Location spawnLocation = loadLocation(event.getWorld(),eventSection.getConfigurationSection("spawn-location"));
+        boolean enabled = eventSection.getBoolean("enabled");
 
         event.setSpawnLocation(spawnLocation);
         event.setCommandName(commandName);
         event.setDisplayName(displayName);
+        event.setEnabled(enabled);
     }
 
     private Event loadBossEvent(String name, ConfigurationSection bossSection) {
@@ -113,6 +110,10 @@ public class YamlEventConfig implements EventConfig {
         for(String key : startSection.getKeys(false)) {
             BossStart start = loadBossStart(world,startSection.getConfigurationSection(key));
             event.addBossStart(start);
+        }
+
+        for(Map.Entry<BossSideEnum,String> bossSideName : loadNames(bossSection.getConfigurationSection("names")).entrySet()) {
+            event.addName(bossSideName.getKey(),bossSideName.getValue());
         }
 
         return event;
@@ -196,10 +197,5 @@ public class YamlEventConfig implements EventConfig {
     public void reload() {
         plugin.reloadConfig();
         loadConfig();
-    }
-
-    @Override
-    public Map<BossSideEnum, String> getNames() {
-        return names;
     }
 }

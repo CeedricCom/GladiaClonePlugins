@@ -4,6 +4,7 @@ import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import me.deltaorion.siegestats.service.SiegeService;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -29,9 +30,13 @@ public class PlayerKillListener implements Listener {
 
         EntityDamageEvent.DamageCause cause = damage.getCause();
         Entity damager = null;
-        if(damage instanceof EntityDamageByEntityEvent) {
-            EntityDamageByEntityEvent entityDamage = (EntityDamageByEntityEvent) damage;
+        if(damage instanceof EntityDamageByEntityEvent entityDamage) {
             damager = entityDamage.getDamager();
+            if(damager instanceof Projectile projectile) {
+                if(projectile.getShooter() instanceof Entity entity) {
+                    damager = entity;
+                }
+            }
         }
         siegeService.evaluateKill(damager,event.getPlayer(),event.getPlayer().getLocation(),cause.name());
     }

@@ -2,6 +2,8 @@ package com.ceedric.event.eventmobs.controller.command.admin;
 
 import com.ceedric.event.eventmobs.EventsPlugin;
 import com.ceedric.event.eventmobs.Permissions;
+import com.ceedric.event.eventmobs.controller.command.EventCompleter;
+import com.ceedric.event.eventmobs.controller.command.ParticipantCompleter;
 import com.ceedric.event.eventmobs.model.Event;
 import com.ceedric.event.eventmobs.model.participant.Participant;
 import com.ceedric.event.eventmobs.view.EventCommandView;
@@ -17,6 +19,8 @@ public class ParticipantCommand extends FunctionalCommand {
     protected ParticipantCommand(EventsPlugin plugin) {
         super(Permissions.PARTICIPANT_COMMAND);
         this.plugin = plugin;
+        registerCompleter(1,new EventCompleter(plugin.getService(), true));
+        registerCompleter(2, new ParticipantCompleter(0,plugin.getService()));
     }
 
     @Override

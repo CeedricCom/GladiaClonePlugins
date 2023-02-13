@@ -26,9 +26,4 @@ public class TestEventConfig implements EventConfig {
     public void reload() {
 
     }
-
-    @Override
-    public Map<BossSideEnum, String> getNames() {
-        return names;
-    }
 }

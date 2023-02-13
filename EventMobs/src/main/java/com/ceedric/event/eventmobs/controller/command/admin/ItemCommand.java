@@ -2,6 +2,8 @@ package com.ceedric.event.eventmobs.controller.command.admin;
 
 import com.ceedric.event.eventmobs.EventsPlugin;
 import com.ceedric.event.eventmobs.Permissions;
+import com.ceedric.event.eventmobs.controller.command.EventCompleter;
+import com.ceedric.event.eventmobs.controller.command.ParticipantCompleter;
 import com.ceedric.event.eventmobs.model.Event;
 import com.ceedric.event.eventmobs.model.participant.Participant;
 import com.ceedric.event.eventmobs.model.participant.PlayerParticipant;
@@ -10,8 +12,9 @@ import me.deltaorion.bukkit.item.custom.CustomItem;
 import me.deltaorion.common.command.CommandException;
 import me.deltaorion.common.command.FunctionalCommand;
 import me.deltaorion.common.command.sent.SentCommand;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.ArrayList;
 
 public class ItemCommand extends FunctionalCommand {
 
@@ -20,6 +23,9 @@ public class ItemCommand extends FunctionalCommand {
     protected ItemCommand(EventsPlugin plugin) {
         super(Permissions.ITEM_COMMAND);
         this.plugin = plugin;
+        registerCompleter(1,new EventCompleter(plugin.getService(), true));
+        registerCompleter(2,new ParticipantCompleter(0,plugin.getService()));
+        registerCompleter(3, sentCommand -> new ArrayList<>(plugin.getCustomItemManager().getRegistered()));
     }
 
     @Override

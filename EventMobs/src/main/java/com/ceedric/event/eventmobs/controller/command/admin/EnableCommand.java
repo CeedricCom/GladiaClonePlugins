@@ -8,14 +8,14 @@ import me.deltaorion.common.command.CommandException;
 import me.deltaorion.common.command.FunctionalCommand;
 import me.deltaorion.common.command.sent.SentCommand;
 
-public class DistributeCommand extends FunctionalCommand {
+public class EnableCommand extends FunctionalCommand {
 
     private final EventsPlugin plugin;
 
-    protected DistributeCommand(EventsPlugin plugin) {
-        super(Permissions.DISTRIBUTE_COMMAND);
+    protected EnableCommand(EventsPlugin plugin) {
+        super(Permissions.ENABLE_COMMAND);
         this.plugin = plugin;
-        registerCompleter(1,new EventCompleter(plugin.getService(), true));
+        registerCompleter(1,new EventCompleter(plugin.getService(), false));
     }
 
     @Override
@@ -25,7 +25,17 @@ public class DistributeCommand extends FunctionalCommand {
         if(event==null)
             throw new CommandException("Unknown event '"+eventName+"'");
 
-        command.getSender().sendMessage("Distributing rewards for '"+eventName+"'");
-        plugin.getService().distributeRewards(event);
+        event.setEnabled(!event.isEnabled());
+        if(event.isEnabled()) {
+            plugin.getPlayerCommand().register(event);
+        } else {
+            plugin.getPlayerCommand().register(event);
+        }
+
+        if(event.isEnabled()) {
+            command.getSender().sendMessage("Event has been enabled");
+        } else if(!event.isEnabled()) {
+            command.getSender().sendMessage("Event has been disabled");
+        }
     }
 }

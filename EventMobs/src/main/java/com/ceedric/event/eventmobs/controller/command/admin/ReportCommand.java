@@ -2,6 +2,7 @@ package com.ceedric.event.eventmobs.controller.command.admin;
 
 import com.ceedric.event.eventmobs.EventsPlugin;
 import com.ceedric.event.eventmobs.Permissions;
+import com.ceedric.event.eventmobs.controller.command.EventCompleter;
 import com.ceedric.event.eventmobs.model.Event;
 import com.ceedric.event.eventmobs.view.paste.PasteBinPasteTransmitter;
 import com.ceedric.event.eventmobs.view.paste.PasteTransmitter;
@@ -25,6 +26,7 @@ public class ReportCommand extends FunctionalCommand {
     protected ReportCommand(EventsPlugin plugin) {
         super(Permissions.SPAWN_COMMAND);
         this.plugin = plugin;
+        registerCompleter(1,new EventCompleter(plugin.getService(), true));
     }
 
     @Override

@@ -15,10 +15,7 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class CSVReportGenerator implements ReportGenerator {
     @Override
@@ -35,7 +32,9 @@ public class CSVReportGenerator implements ReportGenerator {
         printer.println();
         printer.printRecord("Kills over time");
 
-        Map<Side,Map<Integer,Integer>> kills = new HashMap<>();
+        //side -> map , time -> kills for side
+        Map<Integer,Map<Side,Integer>> killOverTime = new HashMap<>();
+        Set<Side> establishedSides = new HashSet<>();
 
         long maxTime = 0;
         for(EventKill kill : world.getKills()) {
@@ -44,13 +43,15 @@ public class CSVReportGenerator implements ReportGenerator {
                 maxTime = time;
 
             Side killSide = kill.getDeathSide().getOpposite();
-            Map<Integer, Integer> side = kills.computeIfAbsent(killSide, k -> new HashMap<>());
-            side.merge(time, 1, Integer::sum);
+            establishedSides.add(killSide);
+            establishedSides.add(killSide.getOpposite());
+            Map<Side, Integer> side = killOverTime.computeIfAbsent(time, k -> new HashMap<>());
+            side.merge(killSide, 1, Integer::sum);
         }
 
         List<String> header = new ArrayList<>();
         header.add("time");
-        for(Side side : kills.keySet()) {
+        for(Side side : establishedSides) {
             header.add(side.getFormattedName());
         }
 
@@ -61,9 +62,10 @@ public class CSVReportGenerator implements ReportGenerator {
                 break;
 
             List<Object> row = new ArrayList<>();
-            row.add(i);
-            for(Map<Integer,Integer> entry : kills.values()) {
-                row.add(entry.getOrDefault(i,0));
+            Map<Side,Integer> killsForTime = killOverTime.getOrDefault(i,new HashMap<>());
+            row.add(i); //add time
+            for(Side side : establishedSides) {
+                row.add(killsForTime.getOrDefault(side,0));
             }
 
             printer.printRecord(row);
@@ -73,7 +75,7 @@ public class CSVReportGenerator implements ReportGenerator {
     private void printMainStatTable(CSVPrinter printer, Event world) throws IOException {
         printer.printRecord("Participant Logs","","","","","","Kill Logs","","","","","");
         //participant logs sorted by damage
-        printer.printRecord("Player","Damage","Kills","Deaths","KDR","","Time (h)","Killer Side","Killer","Victim","Location");
+        printer.printRecord("Player","Damage","Kills","Deaths","KDR","","Time (m)","Killer Side","Killer","Victim","Location");
         Map<Participant,StatPlayer> players = new HashMap<>();
 
         List<List<String>> participantRows = new ArrayList<>();
@@ -160,9 +162,6 @@ public class CSVReportGenerator implements ReportGenerator {
         //display name
         printer.printRecord(ChatColor.stripColor(event.getDisplayName()));
         printer.println();
-
-        printer.printRecord("Attacker", BossSideEnum.BOSS.getFormattedName());
-        printer.printRecord("Defender", BossSideEnum.PLAYERS.getFormattedName());
         printer.printRecord("Winner", event.getWinner().getFormattedName());
         printer.println();
     }
@@ -182,11 +181,14 @@ public class CSVReportGenerator implements ReportGenerator {
         LocalDateTime start = LocalDateTime.ofInstant(Instant.ofEpochMilli(startEpoch), ZoneId.systemDefault());
         LocalDateTime end = LocalDateTime.ofInstant(Instant.ofEpochMilli(endEpoch), ZoneId.systemDefault());
 
-        long hours = ChronoUnit.HOURS.between(start, end);
-        return String.valueOf(hours);
+        long minutes = ChronoUnit.MINUTES.between(start, end);
+        return String.valueOf(minutes);
     }
 
     private long getGraphTime(long startEpoch, long endEpoch) {
+        System.out.println(startEpoch);
+        System.out.println(endEpoch);
+
         LocalDateTime start = LocalDateTime.ofInstant(Instant.ofEpochMilli(startEpoch), ZoneId.systemDefault());
         LocalDateTime end = LocalDateTime.ofInstant(Instant.ofEpochMilli(endEpoch), ZoneId.systemDefault());
 

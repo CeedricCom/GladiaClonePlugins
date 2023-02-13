@@ -14,6 +14,7 @@ import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
+import com.palmergames.bukkit.towny.permissions.TownyPerms;
 import me.deltaorion.common.command.CommandException;
 import me.deltaorion.siegestats.model.SiegeKill;
 import me.deltaorion.siegestats.model.SiegeTown;
@@ -31,6 +32,8 @@ import java.util.*;
 public class SiegeService {
 
     private final Map<UUID, SiegeTown> siegeTowns;
+    private static final String NATION_POINTS_NODE = SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_BATTLE_POINTS.getNode();
+    private static final String TOWN_POINTS_NODE = SiegeWarPermissionNodes.SIEGEWAR_TOWN_SIEGE_BATTLE_POINTS.getNode();
 
     public SiegeService() {
         this.siegeTowns = new HashMap<>();
@@ -137,7 +140,7 @@ public class SiegeService {
         try {
             Resident deadResident = TownyUniverse.getInstance().getResident(victim.getName());
             // Weed out invalid residents, residents without a town, and players who cannot collect Points in a Siege.
-            if (deadResident == null || !deadResident.hasTown() || playerIsMissingSiegePointsNodes(victim))
+            if (deadResident == null || !deadResident.hasTown() || playerIsMissingSiegePointsNodes(deadResident))
                 return null;
 
             Town deadResidentTown = deadResident.getTown();
@@ -193,9 +196,14 @@ public class SiegeService {
         return SiegeWarSettings.getWarSiegeEnabled() && TownyAPI.getInstance().getTownyWorld(world.getName()).isWarAllowed();
     }
 
-    private boolean playerIsMissingSiegePointsNodes(Player deadPlayer) {
-        return !TownyUniverse.getInstance().getPermissionSource().testPermission(deadPlayer, SiegeWarPermissionNodes.SIEGEWAR_TOWN_SIEGE_BATTLE_POINTS.getNode())
-                && !TownyUniverse.getInstance().getPermissionSource().testPermission(deadPlayer, SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_BATTLE_POINTS.getNode());
+    private boolean playerIsMissingSiegePointsNodes(Resident resident) {
+        Map<String,Boolean> perms = TownyPerms.getResidentPerms(resident);
+        boolean townNode = perms.getOrDefault(TOWN_POINTS_NODE,false);
+        boolean nationNode = perms.getOrDefault(NATION_POINTS_NODE,false);
+        boolean nationNode2 = perms.getOrDefault("siegewar.nation.siege.*",false);
+        boolean townNode2 = perms.getOrDefault("siegewar.town.siege.*",false);
+
+        return !townNode && !nationNode && !nationNode2 && !townNode2;
     }
 
     private Siege findAValidSiege(Player deadPlayer, Town deadResidentTown) {

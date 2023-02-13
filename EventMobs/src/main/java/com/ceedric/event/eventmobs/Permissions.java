@@ -1,5 +1,7 @@
 package com.ceedric.event.eventmobs;
 
+import com.ceedric.event.eventmobs.controller.command.admin.AdminCommand;
+
 public class Permissions {
 
     public final static String BASE = "eventmobs";
@@ -11,8 +13,9 @@ public class Permissions {
     public static final String RELOAD_COMMAND = COMMAND + ".reload";
     public static final String ITEM_COMMAND = COMMAND+".item";
     public static final String SKULL_COMMAND = COMMAND+".skull";
+    public static final String ENABLE_COMMAND = COMMAND+".enable";
 
-    public static final String PLAYER_COMMAND = "eventmobs.player";
+    public static final String PLAYER_COMMAND = BASE + ".player";
     public static final String SPAWN_COMMAND = PLAYER_COMMAND + ".spawn";
     public static final String BYPASS = BASE + ".bypass";
     public static final String CLAIM_COMMAND = PLAYER_COMMAND + ".claim";

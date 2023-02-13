@@ -2,12 +2,11 @@ package com.ceedric.event.eventmobs.controller.command.admin;
 
 import com.ceedric.event.eventmobs.EventsPlugin;
 import com.ceedric.event.eventmobs.Permissions;
+import com.ceedric.event.eventmobs.controller.command.EventCompleter;
 import com.ceedric.event.eventmobs.model.Event;
-import io.lumine.mythic.bukkit.BukkitAdapter;
 import me.deltaorion.common.command.CommandException;
 import me.deltaorion.common.command.FunctionalCommand;
 import me.deltaorion.common.command.sent.SentCommand;
-import org.bukkit.Location;
 
 public class StartCommand extends FunctionalCommand {
 
@@ -16,6 +15,7 @@ public class StartCommand extends FunctionalCommand {
     protected StartCommand(EventsPlugin plugin) {
         super(Permissions.START_COMMAND);
         this.plugin = plugin;
+        registerCompleter(1,new EventCompleter(plugin.getService(), true));
     }
 
     @Override

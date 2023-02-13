@@ -2,19 +2,22 @@ package com.ceedric.event.eventmobs.model.boss;
 
 import com.ceedric.event.eventmobs.model.Side;
 
+import java.util.Map;
 import java.util.Objects;
 
 public class BossSide implements Side {
 
     private final BossSideEnum side;
+    private final Map<BossSideEnum,String> names;
 
-    public BossSide(BossSideEnum side) {
+    public BossSide(BossSideEnum side, Map<BossSideEnum, String> names) {
         this.side = side;
+        this.names = names;
     }
 
     @Override
     public String getFormattedName() {
-        return side.getFormattedName();
+        return names.get(side);
     }
 
     @Override
@@ -25,10 +28,10 @@ public class BossSide implements Side {
     @Override
     public Side getOpposite() {
         if(side.equals(BossSideEnum.PLAYERS))
-            return new BossSide(BossSideEnum.BOSS);
+            return new BossSide(BossSideEnum.BOSS, names);
 
         if(side.equals(BossSideEnum.BOSS))
-            return new BossSide(BossSideEnum.PLAYERS);
+            return new BossSide(BossSideEnum.PLAYERS, names);
 
         return this;
     }

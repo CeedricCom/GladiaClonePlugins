@@ -2,6 +2,7 @@ package com.ceedric.event.eventmobs.controller.command.admin;
 
 import com.ceedric.event.eventmobs.EventsPlugin;
 import com.ceedric.event.eventmobs.Permissions;
+import com.ceedric.event.eventmobs.controller.command.EventCompleter;
 import me.deltaorion.common.command.CommandException;
 import me.deltaorion.common.command.FunctionalCommand;
 import me.deltaorion.common.command.sent.SentCommand;
@@ -12,6 +13,7 @@ public class ReloadCommand extends FunctionalCommand {
 
     protected ReloadCommand(EventsPlugin plugin) {
         super(Permissions.RELOAD_COMMAND);
+
         this.plugin = plugin;
     }
 

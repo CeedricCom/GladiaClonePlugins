@@ -1,7 +1,6 @@
 package com.ceedric.event.eventmobs.controller.command.player;
 
 import com.ceedric.event.eventmobs.EventsPlugin;
-import com.ceedric.event.eventmobs.Permissions;
 import com.ceedric.event.eventmobs.model.Event;
 import me.deltaorion.common.command.Command;
 import me.deltaorion.common.command.CommandException;
@@ -36,9 +35,16 @@ public class PlayerCommand extends FunctionalCommand {
         }
     }
 
+    public void deregisterEvent(Event event) {
+        deregisterArgument(event.getCommandName());
+    }
+
     public void register(Event event) {
         if(event.getCommandName().equals("claim"))
             throw new IllegalArgumentException("Cannot register event with command name '"+event.getCommandName()+"'");
+
+        if(!event.isEnabled())
+            return;
 
         registerArgument(event.getCommandName(),new SpawnCommand(event));
     }

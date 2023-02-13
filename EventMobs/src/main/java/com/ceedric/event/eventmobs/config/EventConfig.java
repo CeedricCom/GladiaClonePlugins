@@ -12,6 +12,4 @@ public interface EventConfig {
 
     void reload();
 
-    Map<BossSideEnum, String> getNames();
-
 }

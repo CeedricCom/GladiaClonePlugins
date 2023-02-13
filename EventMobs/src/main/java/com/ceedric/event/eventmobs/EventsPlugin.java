@@ -6,7 +6,6 @@ import com.ceedric.event.eventmobs.controller.Listeners;
 import com.ceedric.event.eventmobs.controller.command.admin.AdminCommand;
 import com.ceedric.event.eventmobs.controller.command.player.PlayerCommand;
 import com.ceedric.event.eventmobs.item.MartianStaff;
-import com.ceedric.event.eventmobs.model.boss.BossEvent;
 import com.ceedric.event.eventmobs.model.Event;
 import com.ceedric.event.eventmobs.model.EventService;
 import com.ceedric.event.eventmobs.model.boss.BossSideEnum;
@@ -19,19 +18,19 @@ public final class EventsPlugin extends BukkitPlugin  {
 
     private EventService service;
     private EventConfig config;
-    private PlayerCommand command;
+    private PlayerCommand playerCommand;
 
     @Override
     public void onPluginEnable() {
         // Plugin startup logic
         this.config = createConfig();
         this.service = new EventService();
-        this.command = new PlayerCommand(this);
+        this.playerCommand = new PlayerCommand(this);
 
         loadConfig();
 
         registerCommand(new AdminCommand(this),"eventadmin");
-        registerCommand(command,"event");
+        registerCommand(playerCommand,"event");
 
 
         getServer().getPluginManager().registerEvents(new Listeners(service),this);
@@ -41,16 +40,16 @@ public final class EventsPlugin extends BukkitPlugin  {
 
     private void loadConfig() {
         service.clearEvents();
-        command.deregister();
+        playerCommand.deregister();
 
         for(Event event : config.getEvents()) {
             service.addEvent(event);
-            command.register(event);
+            playerCommand.register(event);
         }
+    }
 
-        for(Map.Entry<BossSideEnum,String> name : config.getNames().entrySet()) {
-            name.getKey().setFormattedName(name.getValue());
-        }
+    public PlayerCommand getPlayerCommand() {
+        return playerCommand;
     }
 
     public void reloadIConfig() {
@@ -85,6 +84,8 @@ public final class EventsPlugin extends BukkitPlugin  {
 
         return config;
     }
+
+
 
     @Override
     public void onPluginDisable() {

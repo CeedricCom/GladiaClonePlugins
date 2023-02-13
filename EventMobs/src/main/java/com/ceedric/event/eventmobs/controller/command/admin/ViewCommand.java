@@ -2,6 +2,7 @@ package com.ceedric.event.eventmobs.controller.command.admin;
 
 import com.ceedric.event.eventmobs.EventsPlugin;
 import com.ceedric.event.eventmobs.Permissions;
+import com.ceedric.event.eventmobs.controller.command.EventCompleter;
 import com.ceedric.event.eventmobs.model.Event;
 import com.ceedric.event.eventmobs.view.EventCommandView;
 import me.deltaorion.common.command.CommandException;
@@ -16,6 +17,7 @@ public class ViewCommand extends FunctionalCommand {
     protected ViewCommand(EventsPlugin plugin) {
         super(Permissions.VIEW_COMMAND);
         this.plugin = plugin;
+        registerCompleter(1,new EventCompleter(plugin.getService(), false));
     }
 
     @Override

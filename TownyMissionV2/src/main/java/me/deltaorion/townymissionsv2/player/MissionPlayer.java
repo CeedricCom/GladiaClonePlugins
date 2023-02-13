@@ -18,6 +18,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;
@@ -38,6 +39,9 @@ public class MissionPlayer {
 
     private final static String NATION_BEARER_SOURCE_ID_KEY = "TownyMissionsV2_Nation_Bearer_Source_Name";
     private final static String NATION_BEARER_SOURCE_TIME_KEY = "TownyMissionsV2_Nation_Bearer_Source_Time";
+
+    private double contributionMultiplier = 1.0f;
+    private BukkitRunnable expirationMultiplier;
 
     public MissionPlayer(UUID uuid, Plugin plugin) {
 
@@ -205,5 +209,31 @@ public class MissionPlayer {
         }
 
         return 0;
+    }
+
+    public double getContributionMultiplier() {
+        return contributionMultiplier;
+    }
+
+    public void setContributionMultiplier(double contributionMultiplier) {
+        this.contributionMultiplier = contributionMultiplier;
+    }
+
+    public void setTemporaryContributionMultiplier(double multiplier, Duration duration) {
+        if(expirationMultiplier!=null)
+            expirationMultiplier.cancel();
+
+        setContributionMultiplier(multiplier);
+        expirationMultiplier = new BukkitRunnable() {
+            @Override
+            public void run() {
+                setContributionMultiplier(1.0f);
+                Player bukkitPlayer = getPlayer();
+                if(bukkitPlayer!=null) {
+                    bukkitPlayer.sendMessage("Your '"+multiplier+"x multiplier for missions has run out!");
+                }
+            }
+        };
+        expirationMultiplier.runTaskLater(plugin,duration.toSeconds()*20);
     }
 }

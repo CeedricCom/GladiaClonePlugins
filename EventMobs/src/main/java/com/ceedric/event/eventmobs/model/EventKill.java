@@ -20,6 +20,14 @@ public class EventKill {
         this.time = System.currentTimeMillis();
     }
 
+    public EventKill(long time ,Location location, Participant killer, Participant victim, Side deathSide) {
+        this.time = time;
+        this.location = location;
+        this.killer = killer;
+        this.victim = victim;
+        this.deathSide = deathSide;
+    }
+
     public Location getLocation() {
         return location;
     }
@@ -41,6 +49,6 @@ public class EventKill {
     }
 
     public EventKill clone() {
-        return new EventKill(location,killer.clone(),victim.clone(), deathSide);
+        return new EventKill(time,location,killer.clone(),victim.clone(), deathSide);
     }
 }

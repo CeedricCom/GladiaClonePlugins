@@ -107,7 +107,7 @@ public class GatherGoal extends CollectiveGoal implements ContributableGoal {
             if(itemStack==null)
                 continue;
 
-            ItemAlteration alteration = contributeItem(itemStack, required);
+            ItemAlteration alteration = contributeItem(player,itemStack, required);
 
             if(alteration.destroy) {
                 destroyItem(player,i);
@@ -127,7 +127,7 @@ public class GatherGoal extends CollectiveGoal implements ContributableGoal {
         player.getPlayer().getInventory().setItem(slot,null);
     }
 
-    private ItemAlteration contributeItem(ItemStack itemStack, int required) {
+    private ItemAlteration contributeItem(MissionPlayer player, ItemStack itemStack, int required) {
 
         Preconditions.checkNotNull(itemStack);
 
@@ -135,28 +135,30 @@ public class GatherGoal extends CollectiveGoal implements ContributableGoal {
         int contributed = 0;
 
         if(itemStack.getType().equals(toGather)) {
-            if(itemStack.getAmount()<=required) {
-                contributed = itemStack.getAmount();
+            if(getAmount(player,itemStack) <= required) {
+                contributed = getAmount(player,itemStack);
                 destroy = true;
             } else {
-                itemStack.setAmount(itemStack.getAmount()-required);
+                itemStack.setAmount((int) (itemStack.getAmount() - (required/player.getContributionMultiplier())));
                 contributed = required;
             }
         }
-
         return new ItemAlteration(destroy, contributed);
+    }
+
+    private int getAmount(MissionPlayer player, ItemStack itemStack) {
+        return (int) (itemStack.getAmount() * player.getContributionMultiplier());
     }
 
 
     public boolean contribute(MissionPlayer player, Item item) {
-
         if(isComplete())
             return false;
 
         ItemStack itemStack = item.getItemStack();
         int required = getGoal()-getProgress();
 
-        ItemAlteration alteration = contributeItem(itemStack,required);
+        ItemAlteration alteration = contributeItem(player,itemStack,required);
         contribute(player.getUuid(),alteration.contributed);
 
         item.setItemStack(itemStack);

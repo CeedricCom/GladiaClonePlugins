@@ -24,6 +24,7 @@ public class AdminCommand extends FunctionalCommand {
         registerArgument("reload",new ReloadCommand(plugin));
         registerArgument("item",new ItemCommand(plugin));
         registerArgument("skull",new SkullCommand(plugin));
+        registerArgument("enable",new EnableCommand(plugin));
     }
 
     @Override

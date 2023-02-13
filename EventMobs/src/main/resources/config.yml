@@ -1,11 +1,8 @@
-names:
-  boss: 'Aliens'
-  players: 'Humans'
-
 events:
   AlienInvasion:
     type: 'BOSS'
     world: 'invasion'
+    enabled: true
     display-name: '&e&lAlien Invasion'
     bosses:
       1:
@@ -14,7 +11,9 @@ events:
           x: 130
           y: 90
           z: -72
-
+    names:
+      boss: 'Aliens'
+      players: 'Humans'
     topNRewards:
       top1:
         n: 1

@@ -40,8 +40,10 @@ public class EventService {
     @Nullable
     public Event getEventFromWorld(World world) {
         for(Event event : getEvents()) {
-            if(event.getWorld().equals(world))
-                return event;
+            if(event.getWorld().equals(world)) {
+                if(event.isEnabled())
+                    return event;
+            }
         }
 
         return null;

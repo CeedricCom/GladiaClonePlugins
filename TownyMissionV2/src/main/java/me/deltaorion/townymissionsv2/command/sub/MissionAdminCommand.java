@@ -41,6 +41,7 @@ public class MissionAdminCommand implements SubCommand {
         commandArgs.put("tick",new MissionsTickCommand());
         commandArgs.put("save-database",new MissionAdminSaveDatabase());
         commandArgs.put("docs",new DocumentationCommand());
+        commandArgs.put("multiplier",new ContributionMultiplierCommand());
     }
 
     private final HashMap<String,SubCommand> commandArgs;
