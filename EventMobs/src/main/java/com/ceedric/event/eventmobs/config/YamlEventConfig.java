@@ -147,6 +147,8 @@ public class YamlEventConfig implements EventConfig {
             switch (type) {
                 case ITEM -> rewards.add(loadItem(reward));
                 case COMMAND -> rewards.add(loadCommand(reward));
+                case SKULL -> rewards.add(loadSkull(reward));
+                case CUSTOM_ITEM -> rewards.add(loadCustom(reward));
             }
         }
 
@@ -168,6 +170,30 @@ public class YamlEventConfig implements EventConfig {
 
         return new ItemReward(ChatColor.translateAlternateColorCodes('&',name), itemStack,amount);
     }
+
+    public SkullReward loadSkull(ConfigurationSection reward) {
+        ItemStack itemStack = reward.getItemStack("itemstack");
+        int amount = reward.getInt("amount");
+        String name = reward.getString("name");
+        if(name==null)
+            name = "";
+
+        String skullTexture = reward.getString("texture");
+        return new SkullReward(ChatColor.translateAlternateColorCodes('&',name), itemStack,amount,skullTexture);
+    }
+
+    public CustomItemReward loadCustom(ConfigurationSection reward) {
+        ItemStack itemStack = reward.getItemStack("itemstack");
+        int amount = reward.getInt("amount");
+        String name = reward.getString("name");
+        if(name==null)
+            name = "";
+
+        String customItemName = reward.getString("custom-item");
+        return new CustomItemReward(ChatColor.translateAlternateColorCodes('&',name), itemStack,amount,customItemName,plugin.getCustomItemManager());
+    }
+
+
 
     private Map<BossSideEnum, String> loadNames(ConfigurationSection nameSection) {
         Map<BossSideEnum,String> names = new HashMap<>();

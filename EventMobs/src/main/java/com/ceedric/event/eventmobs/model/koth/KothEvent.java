@@ -162,6 +162,9 @@ public class KothEvent extends Event {
     }
 
     public void recordWinner(Player capper) {
+        if(!isEnabled())
+            return;
+
         Party party = PartyManager.getParty(capper);
         if(party==null) {
             Bukkit.getLogger().severe("Winner is not in a party");

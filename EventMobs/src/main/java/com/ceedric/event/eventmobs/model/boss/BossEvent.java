@@ -83,6 +83,7 @@ public class BossEvent extends Event {
 
     public void startEvent() {
         for(BossStart start : startEntities) {
+            start.setAlive(true);
             if(start.getBossMob() == null) {
                 Bukkit.getLogger().severe("Could not find boss of '"+start.getBossName()+"'");
             } else {
@@ -103,16 +104,29 @@ public class BossEvent extends Event {
     }
 
     public boolean recordKill(MythicMob mob) {
-        /**
-         * TODO
-         *  - Make it so this actually waits for all of them to die
-         *  - This is a shortcut so I could write quicker
-         */
+        if(!isEnabled())
+            return false;
+
+        boolean killedBoss = false;
         for(BossStart startEntity : startEntities) {
-            if(startEntity.getBossName().equals(mob.getInternalName()))
-                return true;
+            if(startEntity.getBossName().equals(mob.getInternalName())) {
+                if(startEntity.isAlive()) {
+                    startEntity.setAlive(false);
+                    killedBoss = true;
+                    break;
+                }
+            }
         }
-        return false;
+
+        if(!killedBoss)
+            return false;
+
+        for(BossStart start : startEntities) {
+            if(start.isAlive())
+                return false;
+        }
+
+        return true;
     }
 
     public List<BossStart> getStartEntities() {

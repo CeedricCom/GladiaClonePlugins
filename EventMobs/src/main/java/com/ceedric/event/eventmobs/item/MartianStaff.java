@@ -4,6 +4,7 @@ import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.palmergames.bukkit.towny.TownyAPI;
+import io.lumine.mythic.bukkit.entities.BukkitGoat;
 import me.deltaorion.bukkit.item.EMaterial;
 import me.deltaorion.bukkit.item.ItemBuilder;
 import me.deltaorion.bukkit.item.custom.CustomItem;
@@ -52,10 +53,13 @@ public class MartianStaff extends CustomItem {
         int minSiegeDistance = SiegeWarSettings.getWarSiegeZoneRadiusBlocks()+50;
 
         for(Siege siege : SiegeController.getSieges()) {
-            double siegeDistance = e.getEntity().getLocation().distance(siege.getFlagLocation()) + 50;
-            if(siegeDistance < minSiegeDistance) {
-                event.getPlayer().sendMessage(ChatColor.RED+"You may not use this item within '"+minSiegeDistance+"' of a siege");
-                return;
+            if(siege.getFlagLocation().getWorld().equals(e.getEntity().getWorld())) {
+                double siegeDistance = e.getEntity().getLocation().distance(siege.getFlagLocation()) + 50;
+                if (siegeDistance < minSiegeDistance) {
+                    event.getPlayer().sendMessage(ChatColor.RED + "You may not use this item within '" + minSiegeDistance + "' of a siege");
+                    return;
+                }
+                
             }
         }
 

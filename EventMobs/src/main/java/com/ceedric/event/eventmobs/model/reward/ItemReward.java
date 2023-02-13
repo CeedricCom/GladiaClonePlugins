@@ -4,6 +4,7 @@ import com.ceedric.event.eventmobs.model.participant.PlayerParticipant;
 import me.deltaorion.common.locale.message.Message;
 import net.kyori.adventure.text.Component;
 import org.bukkit.ChatColor;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -33,13 +34,13 @@ public class ItemReward implements Reward {
                 newLore.add(ChatColor.translateAlternateColorCodes('&', Message.valueOf(line).toString(player.getName())));
             }
 
-            String json = itemStack.getItemMeta().getDisplayName();
-
             clone.editMeta(itemMeta -> {
                 itemMeta.setLore(newLore);
                 itemMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&',getName()));
             });
         }
+
+        clone = preGiveItem(bukkitPlayer,clone);
 
         for(int i=0;i<amount;i++) {
             if (bukkitPlayer.getInventory().firstEmpty() == -1) {
@@ -48,6 +49,16 @@ public class ItemReward implements Reward {
                 bukkitPlayer.getInventory().addItem(clone);
             }
         }
+
+        postGiveItem(bukkitPlayer,clone);
+    }
+
+    protected void postGiveItem(Player bukkitPlayer, ItemStack itemStack) {
+
+    }
+
+    protected ItemStack preGiveItem(Player bukkitPlayer, ItemStack itemStack) {
+        return itemStack;
     }
 
     @Override

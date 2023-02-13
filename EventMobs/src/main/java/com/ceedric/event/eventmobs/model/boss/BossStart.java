@@ -8,10 +8,12 @@ public class BossStart {
 
     private final String bossName;
     private final Location spawnLocation;
+    private boolean alive = true;
 
     public BossStart(String bossName, Location spawnLocation) {
         this.bossName = bossName;
         this.spawnLocation = spawnLocation;
+        this.alive = false;
     }
 
     public String getBossName() {
@@ -24,5 +26,13 @@ public class BossStart {
 
     public MythicMob getBossMob() {
         return MythicBukkit.inst().getMobManager().getMythicMob(bossName).orElse(null);
+    }
+
+    public boolean isAlive() {
+        return alive;
+    }
+
+    public void setAlive(boolean alive) {
+        this.alive = alive;
     }
 }

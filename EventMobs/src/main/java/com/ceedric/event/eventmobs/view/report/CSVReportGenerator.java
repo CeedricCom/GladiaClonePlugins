@@ -186,9 +186,6 @@ public class CSVReportGenerator implements ReportGenerator {
     }
 
     private long getGraphTime(long startEpoch, long endEpoch) {
-        System.out.println(startEpoch);
-        System.out.println(endEpoch);
-
         LocalDateTime start = LocalDateTime.ofInstant(Instant.ofEpochMilli(startEpoch), ZoneId.systemDefault());
         LocalDateTime end = LocalDateTime.ofInstant(Instant.ofEpochMilli(endEpoch), ZoneId.systemDefault());
 
