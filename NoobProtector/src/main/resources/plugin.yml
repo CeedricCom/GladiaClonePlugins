@@ -1,0 +1,15 @@
+name: NoobProtector
+version: ${project.version}
+main: me.cedric.noobprotector.NoobProtector
+api-version: 1.16
+depend:
+  - Towny
+softdepend:
+  - CombatLogX
+commands:
+  pvpadmin:
+    permission: noobprotector.admin
+  pvp-on:
+    permission: noob-protector.pvp-on
+
+

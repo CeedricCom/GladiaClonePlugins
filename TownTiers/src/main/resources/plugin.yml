@@ -1,0 +1,14 @@
+name: TownTiers
+version: ${project.version}
+main: me.deltaorion.towntier.towntiers.TownTiers
+api-version: 1.16
+depend: [Towny]
+softdepend: [SiegeWar,mcMMO,CombatLogX,CombatPlus]
+commands:
+  tiers:
+    description: all commands related to town tiers
+  rc:
+    description: sets a regional capital
+  myxp:
+    description: allows a player to see their experience
+
