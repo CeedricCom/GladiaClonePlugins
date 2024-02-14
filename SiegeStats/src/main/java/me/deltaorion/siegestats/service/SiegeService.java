@@ -182,12 +182,7 @@ public class SiegeService {
         if(resident==null)
             return side;
 
-        try {
-            Town town = resident.getTown();
-            side = SiegeWarAllegianceUtil.calculateCandidateSiegePlayerSide(victim, town, siege);
-        } catch (NotRegisteredException e) {
-            side = SiegeSide.NOBODY;
-        }
+        side = SiegeSide.getPlayerSiegeSide(siege, victim);
 
         return side;
     }
@@ -222,7 +217,8 @@ public class SiegeService {
                 continue;
 
             //Is player an attacker or defender in this siege?
-            if(SiegeWarAllegianceUtil.calculateCandidateSiegePlayerSide(deadPlayer, deadResidentTown, candidateSiege) == SiegeSide.NOBODY)
+            if(SiegeSide.getPlayerSiegeSide(candidateSiege, deadPlayer) == SiegeSide.NOBODY)
+
                 continue;
 
             //Set nearestSiege if it is 1st viable one OR closer than smallestDistanceToSiege.

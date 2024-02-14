@@ -256,68 +256,60 @@ public class GUImanager {
         if(isTown) {
             for (TownTierData tierData : TownTiers.getInstance().getTownData()) {
                 if (tierData.isTown() && !tierData.isLegacy()) {
-                    try {
-                        if (i < 5) {
-                            Town tierTown = TownyUniverse.getInstance().getDataSource().getTown(tierData.getUniqueID());
-                            ItemStack skull = TownTiers.getSkull(tierTown.getMayor().getUUID());
-                            ItemMeta skullMeta = skull.getItemMeta();
-                            int r = i+1;
-                            skullMeta.setDisplayName(ChatColor.YELLOW + "" + ChatColor.BOLD + "" + r + ") " + tierTown.getName());
-                            ArrayList<String> skullLore = new ArrayList<>();
-                            skullLore.add("");
-                            skullLore.add(ChatColor.GOLD+"Rank: "+ChatColor.WHITE+""+(i+1));
-                            skullLore.add(ChatColor.GOLD + "Mayor: " + ChatColor.WHITE + tierTown.getMayor().getName());
-                            skullLore.add(ChatColor.GOLD + "Tier: " + ChatColor.WHITE + Math.max(0,tierData.getTier()));
-                            skullLore.add(ChatColor.GOLD + "TP: "  + ChatColor.WHITE+ Math.max(0,tierData.getXP()));
-                            skullLore.add("");
-                            skullLore.add(ChatColor.YELLOW+"/tiers top town"+ChatColor.WHITE+" for more!");
-                            skullMeta.setLore(skullLore);
-                            skull.setItemMeta(skullMeta);
-                            mainGUI.setItem(pivot + multiplier, skull);
-                            multiplier *= -1;
-                            if (multiplier < 0) {
-                                multiplier--;
-                            } else if (multiplier == 0) {
-                                multiplier = -1;
-                            }
-                            i++;
+                    if (i < 5) {
+                        Town tierTown = TownyUniverse.getInstance().getTown(tierData.getUniqueID());
+                        ItemStack skull = TownTiers.getSkull(tierTown.getMayor().getUUID());
+                        ItemMeta skullMeta = skull.getItemMeta();
+                        int r = i+1;
+                        skullMeta.setDisplayName(ChatColor.YELLOW + "" + ChatColor.BOLD + "" + r + ") " + tierTown.getName());
+                        ArrayList<String> skullLore = new ArrayList<>();
+                        skullLore.add("");
+                        skullLore.add(ChatColor.GOLD+"Rank: "+ChatColor.WHITE+""+(i+1));
+                        skullLore.add(ChatColor.GOLD + "Mayor: " + ChatColor.WHITE + tierTown.getMayor().getName());
+                        skullLore.add(ChatColor.GOLD + "Tier: " + ChatColor.WHITE + Math.max(0,tierData.getTier()));
+                        skullLore.add(ChatColor.GOLD + "TP: "  + ChatColor.WHITE+ Math.max(0,tierData.getXP()));
+                        skullLore.add("");
+                        skullLore.add(ChatColor.YELLOW+"/tiers top town"+ChatColor.WHITE+" for more!");
+                        skullMeta.setLore(skullLore);
+                        skull.setItemMeta(skullMeta);
+                        mainGUI.setItem(pivot + multiplier, skull);
+                        multiplier *= -1;
+                        if (multiplier < 0) {
+                            multiplier--;
+                        } else if (multiplier == 0) {
+                            multiplier = -1;
                         }
-                    } catch (NotRegisteredException e) {
-                        continue;
+                        i++;
                     }
                 }
             }
         } else {
             for (TownTierData tierData : TownTiers.getInstance().getTownData()) {
                 if (!tierData.isTown() && !tierData.isLegacy()) {
-                    try {
-                        if (i < 5) {
-                            Nation tierNation = TownyUniverse.getInstance().getDataSource().getNation(tierData.getUniqueID());
-                            ItemStack skull = TownTiers.getSkull(tierNation.getKing().getUUID());
-                            ItemMeta skullMeta = skull.getItemMeta();
-                            int r = i+1;
-                            skullMeta.setDisplayName(ChatColor.YELLOW + "" + ChatColor.BOLD + "" + r +") " + tierNation.getName());
-                            ArrayList<String> skullLore = new ArrayList<>();
-                            skullLore.add("");
-                            skullLore.add(ChatColor.GOLD+"Rank: "+ChatColor.WHITE+""+(i+1));
-                            skullLore.add(ChatColor.GOLD + "King: "+ChatColor.WHITE + tierNation.getKing().getName());
-                            skullLore.add(ChatColor.GOLD + "Tier: "+ChatColor.WHITE + Math.max(0,tierData.getTier()));
-                            skullLore.add(ChatColor.GOLD + "NP: "+ChatColor.WHITE + Math.max(0,tierData.getXP()));
-                            skullLore.add("");
-                            skullLore.add(ChatColor.YELLOW+"/tiers top nation"+ChatColor.WHITE+" for more!");
-                            skullMeta.setLore(skullLore);
-                            skull.setItemMeta(skullMeta);
-                            mainGUI.setItem(pivot + multiplier, skull);
-                            multiplier *= -1;
-                            if (multiplier < 0) {
-                                multiplier--;
-                            } else if (multiplier == 0) {
-                                multiplier = -1;
-                            }
-                            i++;
+                    if (i < 5) {
+                        Nation tierNation = TownyUniverse.getInstance().getNation(tierData.getUniqueID());
+                        ItemStack skull = TownTiers.getSkull(tierNation.getKing().getUUID());
+                        ItemMeta skullMeta = skull.getItemMeta();
+                        int r = i+1;
+                        skullMeta.setDisplayName(ChatColor.YELLOW + "" + ChatColor.BOLD + "" + r +") " + tierNation.getName());
+                        ArrayList<String> skullLore = new ArrayList<>();
+                        skullLore.add("");
+                        skullLore.add(ChatColor.GOLD+"Rank: "+ChatColor.WHITE+""+(i+1));
+                        skullLore.add(ChatColor.GOLD + "King: "+ChatColor.WHITE + tierNation.getKing().getName());
+                        skullLore.add(ChatColor.GOLD + "Tier: "+ChatColor.WHITE + Math.max(0,tierData.getTier()));
+                        skullLore.add(ChatColor.GOLD + "NP: "+ChatColor.WHITE + Math.max(0,tierData.getXP()));
+                        skullLore.add("");
+                        skullLore.add(ChatColor.YELLOW+"/tiers top nation"+ChatColor.WHITE+" for more!");
+                        skullMeta.setLore(skullLore);
+                        skull.setItemMeta(skullMeta);
+                        mainGUI.setItem(pivot + multiplier, skull);
+                        multiplier *= -1;
+                        if (multiplier < 0) {
+                            multiplier--;
+                        } else if (multiplier == 0) {
+                            multiplier = -1;
                         }
-                    } catch (NotRegisteredException e) {
-                        continue;
+                        i++;
                     }
                 }
             }

@@ -40,22 +40,12 @@ public class TiersCommand implements TabExecutor {
                     if (args.length > 2) {
                         if (args[1].equalsIgnoreCase("town")) {
                             Town town = null;
-                            try {
-                                town = TownyAPI.getInstance().getDataSource().getTown(args[2]);
-                            } catch (NotRegisteredException e) {
-                                sender.sendMessage("Town not found");
-                                return true;
-                            }
+                            town = TownyAPI.getInstance().getTown(args[2]);
                             TownTiers.getInstance().resetXPTown(town);
                             sender.sendMessage("Successfully Reset XP from " + town.getName());
                         } else if (args[1].equalsIgnoreCase("nation")) {
-                            Nation nation = null;
-                            try {
-                                nation = TownyAPI.getInstance().getDataSource().getNation(args[2]);
-                            } catch (NotRegisteredException e) {
-                                sender.sendMessage("Nation not found");
-                                return true;
-                            }
+                            Nation nation;
+                            nation = TownyAPI.getInstance().getNation(args[2]);
                             TownTiers.getInstance().resetXPNation(nation);
                             sender.sendMessage("Successfully Reset XP from " + nation.getName());
                         } else {
@@ -83,23 +73,13 @@ public class TiersCommand implements TabExecutor {
                         }
                         if (args[1].equalsIgnoreCase("town")) {
                             Town town = null;
-                            try {
-                                town = TownyAPI.getInstance().getDataSource().getTown(args[2]);
-                            } catch (NotRegisteredException e) {
-                                sender.sendMessage("Town not found");
-                                return true;
-                            }
+                            town = TownyAPI.getInstance().getTown(args[2]);
                             TownTiers.getInstance().setTierTown(town, tier);
                             sender.sendMessage("Successfully Set Tier from " + town.getName() + " to tier " + tier);
                             return true;
                         } else if (args[1].equalsIgnoreCase("nation")) {
                             Nation nation = null;
-                            try {
-                                nation = TownyAPI.getInstance().getDataSource().getNation(args[2]);
-                            } catch (NotRegisteredException e) {
-                                sender.sendMessage("Nation not found");
-                                return true;
-                            }
+                            nation = TownyAPI.getInstance().getNation(args[2]);
                             TownTiers.getInstance().setTierNation(nation, tier);
                             sender.sendMessage("Successfully Set Tier from " + nation.getName() + " to tier " + tier);
                         } else {
@@ -127,23 +107,13 @@ public class TiersCommand implements TabExecutor {
                         }
                         if (args[1].equalsIgnoreCase("town")) {
                             Town town = null;
-                            try {
-                                town = TownyAPI.getInstance().getDataSource().getTown(args[2]);
-                            } catch (NotRegisteredException e) {
-                                sender.sendMessage("Town not found");
-                                return true;
-                            }
+                            town = TownyAPI.getInstance().getTown(args[2]);
                             TownTiers.getInstance().setXPTown(town, xp);
                             sender.sendMessage("Successfully Set xp of " + town.getName() + " to " + xp);
                             return true;
                         } else if (args[1].equalsIgnoreCase("nation")) {
                             Nation nation = null;
-                            try {
-                                nation = TownyAPI.getInstance().getDataSource().getNation(args[2]);
-                            } catch (NotRegisteredException e) {
-                                sender.sendMessage("Nation not found");
-                                return true;
-                            }
+                            nation = TownyAPI.getInstance().getNation(args[2]);
                             TownTiers.getInstance().setXPNation(nation, xp);
                             sender.sendMessage("Successfully Set XP of " + nation.getName() + " to " + xp);
                         } else {
@@ -162,22 +132,12 @@ public class TiersCommand implements TabExecutor {
                 if (args.length > 2) {
                     if (args[1].equalsIgnoreCase("town")) {
                         Town town = null;
-                        try {
-                            town = TownyAPI.getInstance().getDataSource().getTown(args[2]);
-                        } catch (NotRegisteredException e) {
-                            sender.sendMessage("Town not found");
-                            return true;
-                        }
+                        town = TownyAPI.getInstance().getTown(args[2]);
                         TownTiers.getInstance().printXpTown(town, sender);
                         return true;
                     } else if (args[1].equalsIgnoreCase("nation")) {
                         Nation nation = null;
-                        try {
-                            nation = TownyAPI.getInstance().getDataSource().getNation(args[2]);
-                        } catch (NotRegisteredException e) {
-                            sender.sendMessage("Nation not found");
-                            return true;
-                        }
+                        nation = TownyAPI.getInstance().getNation(args[2]);
                         TownTiers.getInstance().printXpNation(nation, sender);
                         return true;
                     } else {
@@ -201,23 +161,14 @@ public class TiersCommand implements TabExecutor {
                         }
                         if (args[1].equalsIgnoreCase("town")) {
                             Town town = null;
-                            try {
-                                town = TownyAPI.getInstance().getDataSource().getTown(args[2]);
-                            } catch (NotRegisteredException e) {
-                                sender.sendMessage("Town not found");
-                                return true;
-                            }
+                            town = TownyAPI.getInstance().getTown(args[2]);
                             TownTiers.getInstance().addXPTown(town, xp);
                             sender.sendMessage("Successfully added " + xp + " xp to " + town.getName());
+                            String s = "dsa";
                             return true;
                         } else if (args[1].equalsIgnoreCase("nation")) {
                             Nation nation = null;
-                            try {
-                                nation = TownyAPI.getInstance().getDataSource().getNation(args[2]);
-                            } catch (NotRegisteredException e) {
-                                sender.sendMessage("Nation not found");
-                                return true;
-                            }
+                            nation = TownyAPI.getInstance().getNation(args[2]);
                             TownTiers.getInstance().addXPNation(nation, xp);
                             sender.sendMessage("Successfully added " + xp + " xp to " + nation.getName());
                         } else {

@@ -1,6 +1,7 @@
 package me.deltaorion.siegestats.controller.listener;
 
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
+import com.gmail.goosius.siegewar.utils.SiegeWarBannerControlUtil;
 import me.deltaorion.siegestats.service.SiegeService;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -58,8 +59,8 @@ public class PlayerKillListener implements Listener {
 
     @EventHandler (priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onQuit(PlayerQuitEvent event) {
-        if(event.getPlayer().isDead()
-                && SiegeWarSettings.getKillPlayersWhoLogoutInSiegeZones()) {
+        if (event.getPlayer().isDead()) {
+
 
             siegeService.evaluateKill(null, event.getPlayer(), event.getPlayer().getLocation(), "logoff");
             siegeService.evaluateDamage(null,event.getPlayer(),"logoff",event.getPlayer().getLastDamage());

@@ -4,8 +4,11 @@ import com.gmail.goosius.siegewar.SiegeController;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.event.*;
+import com.palmergames.bukkit.towny.event.player.PlayerEntersIntoTownBorderEvent;
+import com.palmergames.bukkit.towny.event.player.PlayerExitsFromTownBorderEvent;
 import com.palmergames.bukkit.towny.event.statusscreen.NationStatusScreenEvent;
 import com.palmergames.bukkit.towny.event.statusscreen.TownStatusScreenEvent;
+import com.palmergames.bukkit.towny.event.town.TownLeaveEvent;
 import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Resident;
@@ -960,13 +963,13 @@ public class Listeners implements Listener {
     }
 
     @EventHandler
-    public void onClaims(PlayerEnterTownEvent event) {
+    public void onClaims(PlayerEntersIntoTownBorderEvent event) {
         Town town = TownyUtils.getTownFromPlayer(event.getPlayer());
         Player player = event.getPlayer();
         if (town == null) {
             return;
         }
-        if (event.getEnteredtown().equals(town)) {
+        if (event.getEnteredTown().equals(town)) {
             TownTier tier = TownTiers.getInstance().getTierFromTown(town);
             int haste = Math.min(tier.getHasteInClaims(), TownyUtils.getMetaDataFromTown(town, Settings.hasteInClaims));
             if (haste < 0) {
@@ -987,13 +990,13 @@ public class Listeners implements Listener {
     }
 
     @EventHandler
-    public void onTownLeave(PlayerLeaveTownEvent event) {
+    public void onTownLeave(PlayerExitsFromTownBorderEvent event) {
         Town town = TownyUtils.getTownFromPlayer(event.getPlayer());
         Player player = event.getPlayer();
         if (town == null) {
             return;
         }
-        if (event.getLefttown().equals(town)) {
+        if (event.getLeftTown().equals(town)) {
             handlePotionEffectRemoval(player);
         }
     }
