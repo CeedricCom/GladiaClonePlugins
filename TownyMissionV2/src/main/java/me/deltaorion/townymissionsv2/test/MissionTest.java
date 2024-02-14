@@ -34,8 +34,10 @@ public class MissionTest implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
 
-        if(!sender.isOp())
+        if(!sender.isOp()) {
             sender.sendMessage(Message.NO_PERMISSION.getMessage());
+            return true;
+        }
 
         if(sender instanceof Player) {
             //place test logic here
